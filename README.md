@@ -13,7 +13,7 @@
 |  | [에어드라이어](equipment/%EA%B1%B4%EC%A1%B0%C2%B7%EC%A0%9C%EC%8A%B5%20%EC%84%A4%EB%B9%84/%EC%97%90%EC%96%B4%EB%93%9C%EB%9D%BC%EC%9D%B4%EC%96%B4) ⚠️ | 🟡 작성 중 | — | — | ✅ | — | 0.0.1 | 8 | Claude | 2026-11-03 |
 | **계측·분석 설비** | [레이저측정기](equipment/%EA%B3%84%EC%B8%A1%C2%B7%EB%B6%84%EC%84%9D%20%EC%84%A4%EB%B9%84/%EB%A0%88%EC%9D%B4%EC%A0%80%EC%B8%A1%EC%A0%95%EA%B8%B0) ⚠️ | 🟡 작성 중 | — | — | ✅ | — | 0.0.1 | 7 | Claude | 2026-11-03 |
 |  | [시료절편기](equipment/%EA%B3%84%EC%B8%A1%C2%B7%EB%B6%84%EC%84%9D%20%EC%84%A4%EB%B9%84/%EC%8B%9C%EB%A3%8C%EC%A0%88%ED%8E%B8%EA%B8%B0) | ⚪ 예정 | — | — | — | — | - | - | - | - |
-| **교정 설비** | [스트레쳐](equipment/%EA%B5%90%EC%A0%95%20%EC%84%A4%EB%B9%84/%EC%8A%A4%ED%8A%B8%EB%A0%88%EC%B3%90) | 🟢 완비 | ✅ | ✅ | ✅ | — | 0.0.3 | 8 | Claude | 2026-11-03 |
+| **교정 설비** | [스트레쳐](equipment/%EA%B5%90%EC%A0%95%20%EC%84%A4%EB%B9%84/%EC%8A%A4%ED%8A%B8%EB%A0%88%EC%B3%90) | 🟢 완비 | ✅ | ✅ | ✅ | — | 0.0.3 | 8 | Claude | 2026-11-04 |
 | **금속열처리 설비** | [고주파열처리 설비](equipment/%EA%B8%88%EC%86%8D%EC%97%B4%EC%B2%98%EB%A6%AC%20%EC%84%A4%EB%B9%84/%EA%B3%A0%EC%A3%BC%ED%8C%8C%EC%97%B4%EC%B2%98%EB%A6%AC%20%EC%84%A4%EB%B9%84) | 🟡 작성 중 | — | — | ✅ | — | 0.0.1 | 7 | Claude | 2026-11-03 |
 |  | [배치형열처리로](equipment/%EA%B8%88%EC%86%8D%EC%97%B4%EC%B2%98%EB%A6%AC%20%EC%84%A4%EB%B9%84/%EB%B0%B0%EC%B9%98%ED%98%95%EC%97%B4%EC%B2%98%EB%A6%AC%EB%A1%9C) | 🟡 작성 중 | — | — | ✅ | — | 0.0.1 | 8 | Claude | 2026-11-03 |
 | **냉각 설비** | [PET 냉각장치](equipment/%EB%83%89%EA%B0%81%20%EC%84%A4%EB%B9%84/PET%20%EB%83%89%EA%B0%81%EC%9E%A5%EC%B9%98) | ⚪ 예정 | — | — | — | — | - | - | - | - |
@@ -34,7 +34,7 @@
 | **분쇄·파쇄 설비** | [분쇄·파쇄기](equipment/%EB%B6%84%EC%87%84%C2%B7%ED%8C%8C%EC%87%84%20%EC%84%A4%EB%B9%84/%EB%B6%84%EC%87%84%C2%B7%ED%8C%8C%EC%87%84%EA%B8%B0) | ⚪ 예정 | — | — | — | — | - | - | - | - |
 |  | [초음파분쇄기](equipment/%EB%B6%84%EC%87%84%C2%B7%ED%8C%8C%EC%87%84%20%EC%84%A4%EB%B9%84/%EC%B4%88%EC%9D%8C%ED%8C%8C%EB%B6%84%EC%87%84%EA%B8%B0) | ⚪ 예정 | — | — | — | — | - | - | - | - |
 | **사출성형 설비** | [PET 사출성형기](equipment/%EC%82%AC%EC%B6%9C%EC%84%B1%ED%98%95%20%EC%84%A4%EB%B9%84/PET%20%EC%82%AC%EC%B6%9C%EC%84%B1%ED%98%95%EA%B8%B0) | 🟡 작성 중 | — | — | ✅ | ✅ | 0.0.1 | 8 | Claude | 2026-11-03 |
-| **섬유가공 설비** | [날염기](equipment/%EC%84%AC%EC%9C%A0%EA%B0%80%EA%B3%B5%20%EC%84%A4%EB%B9%84/%EB%82%A0%EC%97%BC%EA%B8%B0) | 🟡 작성 중 | — | ✅ | ✅ | ✅ | 0.0.1 | 8 | Claude | 2026-11-03 |
+| **섬유가공 설비** | [날염기](equipment/%EC%84%AC%EC%9C%A0%EA%B0%80%EA%B3%B5%20%EC%84%A4%EB%B9%84/%EB%82%A0%EC%97%BC%EA%B8%B0) | 🟡 작성 중 | — | ✅ | ✅ | ✅ | 0.0.1 | 8 | Claude | 2026-11-04 |
 |  | [드라이 클리너](equipment/%EC%84%AC%EC%9C%A0%EA%B0%80%EA%B3%B5%20%EC%84%A4%EB%B9%84/%EB%93%9C%EB%9D%BC%EC%9D%B4%20%ED%81%B4%EB%A6%AC%EB%84%88) | 🟡 작성 중 | — | — | ✅ | — | 0.0.1 | 8 | Claude | 2026-11-03 |
 |  | [머서라이징기](equipment/%EC%84%AC%EC%9C%A0%EA%B0%80%EA%B3%B5%20%EC%84%A4%EB%B9%84/%EB%A8%B8%EC%84%9C%EB%9D%BC%EC%9D%B4%EC%A7%95%EA%B8%B0) | 🟡 작성 중 | — | — | ✅ | — | 0.0.1 | 7 | Claude | 2026-11-03 |
 |  | [표백기](equipment/%EC%84%AC%EC%9C%A0%EA%B0%80%EA%B3%B5%20%EC%84%A4%EB%B9%84/%ED%91%9C%EB%B0%B1%EA%B8%B0) ⚠️ | 🟡 작성 중 | — | — | ✅ | — | 0.0.1 | 7 | Claude | 2026-11-03 |
@@ -48,7 +48,7 @@
 |  | [제트염색기](equipment/%EC%97%BC%EC%83%89%20%EC%84%A4%EB%B9%84/%EC%A0%9C%ED%8A%B8%EC%97%BC%EC%83%89%EA%B8%B0) | 🟡 작성 중 | — | — | ✅ | — | 0.0.2 | 8 | Claude | 2026-11-03 |
 | **이송·컨베이어 설비** | [컨베이어](equipment/%EC%9D%B4%EC%86%A1%C2%B7%EC%BB%A8%EB%B2%A0%EC%9D%B4%EC%96%B4%20%EC%84%A4%EB%B9%84/%EC%BB%A8%EB%B2%A0%EC%9D%B4%EC%96%B4) | ⚪ 예정 | — | — | — | — | - | - | - | - |
 | **전력변환 설비** | [정류기](equipment/%EC%A0%84%EB%A0%A5%EB%B3%80%ED%99%98%20%EC%84%A4%EB%B9%84/%EC%A0%95%EB%A5%98%EA%B8%B0) | ⚪ 예정 | — | — | — | — | - | - | - | - |
-| **전자부품 실장·납땜 설비** | [SMD 마운터](equipment/%EC%A0%84%EC%9E%90%EB%B6%80%ED%92%88%20%EC%8B%A4%EC%9E%A5%C2%B7%EB%82%A9%EB%95%9C%20%EC%84%A4%EB%B9%84/SMD%20%EB%A7%88%EC%9A%B4%ED%84%B0) ⚠️ | 🟡 작성 중 | — | ✅ | ✅ | — | - | 7 | Claude | 2026-11-03 |
+| **전자부품 실장·납땜 설비** | [SMD 마운터](equipment/%EC%A0%84%EC%9E%90%EB%B6%80%ED%92%88%20%EC%8B%A4%EC%9E%A5%C2%B7%EB%82%A9%EB%95%9C%20%EC%84%A4%EB%B9%84/SMD%20%EB%A7%88%EC%9A%B4%ED%84%B0) ⚠️ | 🟡 작성 중 | — | ✅ | ✅ | — | - | 7 | Claude | 2026-11-04 |
 |  | [리플로우 납땜 기계](equipment/%EC%A0%84%EC%9E%90%EB%B6%80%ED%92%88%20%EC%8B%A4%EC%9E%A5%C2%B7%EB%82%A9%EB%95%9C%20%EC%84%A4%EB%B9%84/%EB%A6%AC%ED%94%8C%EB%A1%9C%EC%9A%B0%20%EB%82%A9%EB%95%9C%20%EA%B8%B0%EA%B3%84) | 🟡 작성 중 | — | — | ✅ | — | 0.0.1 | 8 | Claude | 2026-11-03 |
 | **절단·정밀가공 설비** | [고속밀링기](equipment/%EC%A0%88%EB%8B%A8%C2%B7%EC%A0%95%EB%B0%80%EA%B0%80%EA%B3%B5%20%EC%84%A4%EB%B9%84/%EA%B3%A0%EC%86%8D%EB%B0%80%EB%A7%81%EA%B8%B0) ⚠️ | 🟡 작성 중 | — | — | ✅ | — | 0.0.1 | 8 | Claude | 2026-11-03 |
 |  | [띠톱기계](equipment/%EC%A0%88%EB%8B%A8%C2%B7%EC%A0%95%EB%B0%80%EA%B0%80%EA%B3%B5%20%EC%84%A4%EB%B9%84/%EB%9D%A0%ED%86%B1%EA%B8%B0%EA%B3%84) ⚠️ | 🟡 작성 중 | — | — | ✅ | — | 0.0.1 | 7 | Claude | 2026-11-03 |
@@ -74,7 +74,7 @@
 |  | [탈묵기](equipment/%ED%8E%84%ED%94%84%C2%B7%EC%A0%9C%EC%A7%80%20%EC%84%A4%EB%B9%84/%ED%83%88%EB%AC%B5%EA%B8%B0) | ⚪ 예정 | — | — | — | — | - | - | - | - |
 |  | [펄퍼(PULPER)](equipment/%ED%8E%84%ED%94%84%C2%B7%EC%A0%9C%EC%A7%80%20%EC%84%A4%EB%B9%84/%ED%8E%84%ED%8D%BC%28PULPER%29) | ⚪ 예정 | — | — | — | — | - | - | - | - |
 | **표면가공·처리 설비** | [쇼트블라스트머신](equipment/%ED%91%9C%EB%A9%B4%EA%B0%80%EA%B3%B5%C2%B7%EC%B2%98%EB%A6%AC%20%EC%84%A4%EB%B9%84/%EC%87%BC%ED%8A%B8%EB%B8%94%EB%9D%BC%EC%8A%A4%ED%8A%B8%EB%A8%B8%EC%8B%A0) | 🟡 작성 중 | — | — | ✅ | — | 0.0.3 | 7 | Claude | 2026-11-03 |
-|  | [자동경면사상가공기](equipment/%ED%91%9C%EB%A9%B4%EA%B0%80%EA%B3%B5%C2%B7%EC%B2%98%EB%A6%AC%20%EC%84%A4%EB%B9%84/%EC%9E%90%EB%8F%99%EA%B2%BD%EB%A9%B4%EC%82%AC%EC%83%81%EA%B0%80%EA%B3%B5%EA%B8%B0) | 🟡 작성 중 | — | ✅ | ✅ | — | 0.0.1 | 7 | Claude | 2026-11-03 |
+|  | [자동경면사상가공기](equipment/%ED%91%9C%EB%A9%B4%EA%B0%80%EA%B3%B5%C2%B7%EC%B2%98%EB%A6%AC%20%EC%84%A4%EB%B9%84/%EC%9E%90%EB%8F%99%EA%B2%BD%EB%A9%B4%EC%82%AC%EC%83%81%EA%B0%80%EA%B3%B5%EA%B8%B0) | 🟡 작성 중 | — | ✅ | ✅ | — | 0.0.1 | 7 | Claude | 2026-11-04 |
 | **프레스·압입 설비** | [압력기](equipment/%ED%94%84%EB%A0%88%EC%8A%A4%C2%B7%EC%95%95%EC%9E%85%20%EC%84%A4%EB%B9%84/%EC%95%95%EB%A0%A5%EA%B8%B0) | 🟡 작성 중 | — | — | ✅ | — | 0.0.3 | 6 | Claude | 2026-11-03 |
 |  | [자동압입기](equipment/%ED%94%84%EB%A0%88%EC%8A%A4%C2%B7%EC%95%95%EC%9E%85%20%EC%84%A4%EB%B9%84/%EC%9E%90%EB%8F%99%EC%95%95%EC%9E%85%EA%B8%B0) | 🟡 작성 중 | — | — | ✅ | — | 0.0.1 | 7 | Claude | 2026-11-03 |
 | **혼합·균질 설비** | [교반기](equipment/%ED%98%BC%ED%95%A9%C2%B7%EA%B7%A0%EC%A7%88%20%EC%84%A4%EB%B9%84/%EA%B5%90%EB%B0%98%EA%B8%B0) | ⚪ 예정 | — | — | — | — | - | - | - | - |
