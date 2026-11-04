@@ -6,7 +6,7 @@
 
 | 항목 | 내용 |
 |---|---|
-| 상태 | 🟢 완비 |
+| 상태 | 🟡 작성 중 |
 | 최근 올린 사람 | Claude |
 | 수정일 | 2026-11-03 |
 
@@ -20,8 +20,8 @@
 
 | 구분 | 파일 | 크기 | 바로 보기 |
 |---|---|---|---|
-| 📄 개발계획서 | [띠톱기계_개발계획서(자리표시).docx](%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C/%EB%9D%A0%ED%86%B1%EA%B8%B0%EA%B3%84_%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C%28%EC%9E%90%EB%A6%AC%ED%91%9C%EC%8B%9C%29.docx) | 1 KB | [👁 바로 보기](%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C/%EB%9D%A0%ED%86%B1%EA%B8%B0%EA%B3%84_%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C%28%EC%9E%90%EB%A6%AC%ED%91%9C%EC%8B%9C%29.pdf) |
-| 📘 가이던스 | [띠톱기계_가이던스(자리표시).docx](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/%EB%9D%A0%ED%86%B1%EA%B8%B0%EA%B3%84_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4%28%EC%9E%90%EB%A6%AC%ED%91%9C%EC%8B%9C%29.docx) | 1 KB | [👁 바로 보기](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/%EB%9D%A0%ED%86%B1%EA%B8%B0%EA%B3%84_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4%28%EC%9E%90%EB%A6%AC%ED%91%9C%EC%8B%9C%29.pdf) |
+| 📄 개발계획서 | _아직 없음_ | | |
+| 📘 가이던스 | _아직 없음_ | | |
 | 🧩 AASX | [BandSawMachine_AAS_v0.0.1.aasx](AASX/BandSawMachine_AAS_v0.0.1.aasx) | 2.4 MB | 아래 AAS 구성 참고 |
 | 🧩 AASX | [BandSawMachine_v0.0.1_260930.aasx](AASX/BandSawMachine_v0.0.1_260930.aasx) | 2.4 MB | 아래 AAS 구성 참고 |
 

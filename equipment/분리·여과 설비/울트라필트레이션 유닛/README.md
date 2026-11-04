@@ -6,7 +6,7 @@
 
 | 항목 | 내용 |
 |---|---|
-| 상태 | 🟢 완비 |
+| 상태 | 🟡 작성 중 |
 | 최근 올린 사람 | Claude |
 | 수정일 | 2026-11-03 |
 
@@ -19,8 +19,8 @@
 
 | 구분 | 파일 | 크기 | 바로 보기 |
 |---|---|---|---|
-| 📄 개발계획서 | [울트라필트레이션유닛_개발계획서(자리표시).docx](%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C/%EC%9A%B8%ED%8A%B8%EB%9D%BC%ED%95%84%ED%8A%B8%EB%A0%88%EC%9D%B4%EC%85%98%EC%9C%A0%EB%8B%9B_%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C%28%EC%9E%90%EB%A6%AC%ED%91%9C%EC%8B%9C%29.docx) | 1 KB | [👁 바로 보기](%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C/%EC%9A%B8%ED%8A%B8%EB%9D%BC%ED%95%84%ED%8A%B8%EB%A0%88%EC%9D%B4%EC%85%98%EC%9C%A0%EB%8B%9B_%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C%28%EC%9E%90%EB%A6%AC%ED%91%9C%EC%8B%9C%29.pdf) |
-| 📘 가이던스 | [울트라필트레이션유닛_가이던스(자리표시).docx](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/%EC%9A%B8%ED%8A%B8%EB%9D%BC%ED%95%84%ED%8A%B8%EB%A0%88%EC%9D%B4%EC%85%98%EC%9C%A0%EB%8B%9B_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4%28%EC%9E%90%EB%A6%AC%ED%91%9C%EC%8B%9C%29.docx) | 1 KB | [👁 바로 보기](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/%EC%9A%B8%ED%8A%B8%EB%9D%BC%ED%95%84%ED%8A%B8%EB%A0%88%EC%9D%B4%EC%85%98%EC%9C%A0%EB%8B%9B_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4%28%EC%9E%90%EB%A6%AC%ED%91%9C%EC%8B%9C%29.pdf) |
+| 📄 개발계획서 | _아직 없음_ | | |
+| 📘 가이던스 | _아직 없음_ | | |
 | 🧩 AASX | [UltrafiltrationUnit_AAS_V0.0.1.aasx](AASX/UltrafiltrationUnit_AAS_V0.0.1.aasx) | 3.6 MB | 아래 AAS 구성 참고 |
 
 ## AAS 구성 — `UltrafiltrationUnit`

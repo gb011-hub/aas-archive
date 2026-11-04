@@ -6,7 +6,7 @@
 
 | 항목 | 내용 |
 |---|---|
-| 상태 | 🟢 완비 |
+| 상태 | 🟡 작성 중 |
 | 최근 올린 사람 | Claude |
 | 수정일 | 2026-11-03 |
 
@@ -14,8 +14,8 @@
 
 | 구분 | 파일 | 크기 | 바로 보기 |
 |---|---|---|---|
-| 📄 개발계획서 | [주조장비_개발계획서(자리표시).docx](%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C/%EC%A3%BC%EC%A1%B0%EC%9E%A5%EB%B9%84_%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C%28%EC%9E%90%EB%A6%AC%ED%91%9C%EC%8B%9C%29.docx) | 1 KB | [👁 바로 보기](%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C/%EC%A3%BC%EC%A1%B0%EC%9E%A5%EB%B9%84_%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C%28%EC%9E%90%EB%A6%AC%ED%91%9C%EC%8B%9C%29.pdf) |
-| 📘 가이던스 | [주조장비_가이던스(자리표시).docx](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/%EC%A3%BC%EC%A1%B0%EC%9E%A5%EB%B9%84_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4%28%EC%9E%90%EB%A6%AC%ED%91%9C%EC%8B%9C%29.docx) | 1 KB | [👁 바로 보기](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/%EC%A3%BC%EC%A1%B0%EC%9E%A5%EB%B9%84_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4%28%EC%9E%90%EB%A6%AC%ED%91%9C%EC%8B%9C%29.pdf) |
+| 📄 개발계획서 | _아직 없음_ | | |
+| 📘 가이던스 | _아직 없음_ | | |
 | 🧩 AASX | [DieCastingMachine_v0.0.1_260930.aasx](AASX/DieCastingMachine_v0.0.1_260930.aasx) | 5.7 MB | 아래 AAS 구성 참고 |
 | 🎬 시뮬레이션 | [링크.md](%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98/%EB%A7%81%ED%81%AC.md) | 335 B | [👁 바로 보기](%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98/%EB%A7%81%ED%81%AC.md) |
 | 🎬 시뮬레이션 | [주조_대시보드_3D_녹화.mp4](%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98/%EC%A3%BC%EC%A1%B0_%EB%8C%80%EC%8B%9C%EB%B3%B4%EB%93%9C_3D_%EB%85%B9%ED%99%94.mp4) | 10.2 MB | 다운로드 후 재생 |
