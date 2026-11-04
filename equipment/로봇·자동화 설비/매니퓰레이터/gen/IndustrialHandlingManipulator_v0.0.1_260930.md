@@ -37,42 +37,42 @@ semanticId: `https://admin-shell.io/idta/SubmodelTemplate/AIModelNameplate/1/0`
 | Version | 속성 |  | <sub>0173-1#02-AAS354#002</sub> |
 | ContactInformation | 참조 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Contactinformation/1/0</sub> |
 | Storage | 속성 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Storage/1/0</sub> |
-| KindOfLearning | 다국어 속성 | Learning method of the model (supervised, unsupervised, reinforcement, ....) | <sub>https://admin-shell.io/idta/AIModelNameplate/KindOfLearning/1/0</sub> |
-| **Inputs** | 묶음 (3) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Inputs/1/0</sub> |
+| KindOfLearning | 다국어&nbsp;속성 | Learning method of the model (supervised, unsupervised, reinforcement, ....) | <sub>https://admin-shell.io/idta/AIModelNameplate/KindOfLearning/1/0</sub> |
+| **Inputs** | 묶음&nbsp;(3) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Inputs/1/0</sub> |
 | &nbsp;&nbsp;&nbsp;└ KindOfInput | 속성 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Inputs/KindOfInput/1/0</sub> |
-| &nbsp;&nbsp;&nbsp;└ **DimensionN** | 묶음 (2) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Inputs/DimensionN/1/0</sub> |
+| &nbsp;&nbsp;&nbsp;└ **DimensionN** | 묶음&nbsp;(2) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Inputs/DimensionN/1/0</sub> |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ Size | 속성 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Inputs/DimensionN/Size/1…</sub> |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ Information | 속성 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Inputs/DimensionN/Inform…</sub> |
 | &nbsp;&nbsp;&nbsp;└ Preprocessing | 파일 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Inputs/Preprocessing/1/0</sub> |
-| **Outputs** | 묶음 (1) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Outputs/1/0</sub> |
-| &nbsp;&nbsp;&nbsp;└ **DimensionN** | 묶음 (2) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Outputs/DimensionN/1/0</sub> |
+| **Outputs** | 묶음&nbsp;(1) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Outputs/1/0</sub> |
+| &nbsp;&nbsp;&nbsp;└ **DimensionN** | 묶음&nbsp;(2) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Outputs/DimensionN/1/0</sub> |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ Size | 속성 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Outputs/DimensionN/Size/…</sub> |
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ Result | 다국어 속성 | This property describes the meaning of this outputdimension (e.g. class). | <sub>https://admin-shell.io/idta/AIModelNameplate/Outputs/DimensionN/Resul…</sub> |
-| **TrainingResults** | 묶음 (1) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/TrainingResults/1/0</sub> |
+| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ Result | 다국어&nbsp;속성 | This property describes the meaning of this outputdimension (e.g. class). | <sub>https://admin-shell.io/idta/AIModelNameplate/Outputs/DimensionN/Resul…</sub> |
+| **TrainingResults** | 묶음&nbsp;(1) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/TrainingResults/1/0</sub> |
 | &nbsp;&nbsp;&nbsp;└ ExampleResult | 속성 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/TrainingResults/Result/1…</sub> |
-| **Plots** | 묶음 (3) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Plots/1/0</sub> |
-| &nbsp;&nbsp;&nbsp;└ **TrainingTesting** | 묶음 (1) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Plots/TrainingTesting/1/0</sub> |
+| **Plots** | 묶음&nbsp;(3) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Plots/1/0</sub> |
+| &nbsp;&nbsp;&nbsp;└ **TrainingTesting** | 묶음&nbsp;(1) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Plots/TrainingTesting/1/0</sub> |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ ExamplePlot | 파일 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Plots/TrainingTesting/Pl…</sub> |
-| &nbsp;&nbsp;&nbsp;└ **Structure** | 묶음 (1) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Plots/Structure/1/0</sub> |
+| &nbsp;&nbsp;&nbsp;└ **Structure** | 묶음&nbsp;(1) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Plots/Structure/1/0</sub> |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ ExampleStructurePlot | 파일 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Plots/Structure/Structur…</sub> |
-| &nbsp;&nbsp;&nbsp;└ **GeneralPlots** | 묶음 (1) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Plots/GeneralPlots/1/0</sub> |
+| &nbsp;&nbsp;&nbsp;└ **GeneralPlots** | 묶음&nbsp;(1) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Plots/GeneralPlots/1/0</sub> |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ ExamplePlot | 파일 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Plots/GeneralPlots/Plot/…</sub> |
-| **Details** | 묶음 (4) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Details/1/0</sub> |
+| **Details** | 묶음&nbsp;(4) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Details/1/0</sub> |
 | &nbsp;&nbsp;&nbsp;└ FileExtension | 속성 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Details/DataEnding/1/0</sub> |
 | &nbsp;&nbsp;&nbsp;└ AIFramework | 속성 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Details/AIFramework/1/0</sub> |
 | &nbsp;&nbsp;&nbsp;└ ProgramLanguage | 속성 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Details/ProgramLanguage/…</sub> |
 | &nbsp;&nbsp;&nbsp;└ Requirements | 파일 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/Details/Requirements/1/0</sub> |
-| **AIDataset** | 묶음 (2) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AIDataset/1/0</sub> |
+| **AIDataset** | 묶음&nbsp;(2) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AIDataset/1/0</sub> |
 | &nbsp;&nbsp;&nbsp;└ AIDatasetReference | 참조 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AIDataset/DatasetReferen…</sub> |
 | &nbsp;&nbsp;&nbsp;└ TimeStamp | 범위 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AIDataset/TimeStamp/1/0</sub> |
-| **AITypeSpecificInformation** | 묶음 (3) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AITypeSpecificInformatio…</sub> |
-| &nbsp;&nbsp;&nbsp;└ **TransferLearning** | 묶음 (4) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AITypeSpecificInformatio…</sub> |
+| **AITypeSpecificInformation** | 묶음&nbsp;(3) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AITypeSpecificInformatio…</sub> |
+| &nbsp;&nbsp;&nbsp;└ **TransferLearning** | 묶음&nbsp;(4) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AITypeSpecificInformatio…</sub> |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ Name | 속성 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AITypeSpecificInformatio…</sub> |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ TimeStamp | 속성 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AITypeSpecificInformatio…</sub> |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ Weights | 파일 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AITypeSpecificInformatio…</sub> |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ AIModelNameplate | 참조 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AITypeSpecificInformatio…</sub> |
-| &nbsp;&nbsp;&nbsp;└ **Hyperparameter** | 묶음 (1) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AITypeSpecificInformatio…</sub> |
+| &nbsp;&nbsp;&nbsp;└ **Hyperparameter** | 묶음&nbsp;(1) |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AITypeSpecificInformatio…</sub> |
 | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└ Example | 속성 |  | <sub>https://admin-shell.io/idta/AIModelNameplate/AITypeSpecificInformatio…</sub> |
-| &nbsp;&nbsp;&nbsp;└ Type | 다국어 속성 | Type of the AI(e.g. CNN, RNN, LSTM, ...) | <sub>https://admin-shell.io/idta/AIModelNameplate/AITypeSpecificInformatio…</sub> |
+| &nbsp;&nbsp;&nbsp;└ Type | 다국어&nbsp;속성 | Type of the AI(e.g. CNN, RNN, LSTM, ...) | <sub>https://admin-shell.io/idta/AIModelNameplate/AITypeSpecificInformatio…</sub> |
 
 </details>
