@@ -6,11 +6,7 @@
 
 <img src="gen/SMD_%EB%A7%88%EC%9A%B4%ED%84%B0_thumbnail.jpg" alt="SMD 마운터" height="160" align="right">
 
-| 항목 | 내용 |
-|---|---|
-| 상태 | 🟡 작성 중 |
-| 최근 올린 사람 | Claude |
-| 수정일 | 2026-11-04 |
+필수 산출물 2/3 · 개발계획서 없음 · 가이던스 있음 · AASX 있음
 
 > [!WARNING]
 > **확인 필요**

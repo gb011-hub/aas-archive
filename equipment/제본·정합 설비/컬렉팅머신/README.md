@@ -6,11 +6,7 @@
 
 <img src="gen/Collectingmachine_v0.0.1_thumbnail.png" alt="컬렉팅머신" height="160" align="right">
 
-| 항목 | 내용 |
-|---|---|
-| 상태 | 🟡 작성 중 |
-| 최근 올린 사람 | Claude |
-| 수정일 | 2026-11-03 |
+필수 산출물 1/3 · 개발계획서 없음 · 가이던스 없음 · AASX 있음
 
 ## 산출물
 

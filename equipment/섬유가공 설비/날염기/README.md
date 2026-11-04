@@ -6,11 +6,7 @@
 
 <img src="gen/TextilePrintingMachine_v0.0.1_thumbnail.jpg" alt="날염기" height="160" align="right">
 
-| 항목 | 내용 |
-|---|---|
-| 상태 | 🟢 완비 |
-| 최근 올린 사람 | Claude |
-| 수정일 | 2026-11-04 |
+필수 산출물 3/3 · 개발계획서 있음 · 가이던스 있음 · AASX 있음
 
 ## 산출물
 

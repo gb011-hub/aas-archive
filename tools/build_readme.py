@@ -6,14 +6,14 @@
     python tools/build_readme.py --check  # 확인 필요 항목만 출력 (있으면 종료 코드 1)
 """
 import json
+import re
 import shutil
 import sys
 import urllib.request
 from urllib.parse import quote
 
 import aasx_view
-from archive_lib import (DOC_PREFIX, ICON, REQUIRED, ROOT, SECTIONS, STATUS_ICON, YOUTUBE_CHANNEL,
-                         scan, size)
+from archive_lib import DOC_PREFIX, ICON, REQUIRED, ROOT, SECTIONS, YOUTUBE_CHANNEL, scan, size
 
 _titles = {}
 
@@ -34,62 +34,91 @@ def rel(path, base):
     return quote(path.relative_to(base).as_posix())
 
 
-def status(it):
-    return f"{STATUS_ICON[it['status']]} {it['status']}"
+def en_name(it):
+    """AASX 파일 이름에서 영문 장비명을 뽑는다 (예: TextilePrintingMachine_v0.0.1 → TextilePrintingMachine)."""
+    if not it["aasx"]:
+        return ""
+    stem = re.split(r"_[vV]\d", it["aasx"][-1]["file"].stem)[0]
+    stem = re.sub(r"_(AAS|ReferenceModel)$", "", stem)
+    return stem if re.fullmatch(r"[A-Za-z0-9_]+", stem) else ""
+
+
+def index_doc(it, sec):
+    """표의 문서 칸: 바로 볼 수 있으면 '보기', hwp만 있으면 'PDF 필요', 없으면 빈칸."""
+    es = it["entries"][sec]
+    if not es:
+        return ""
+    e = es[0]
+    if e["view"]:
+        return f"[보기]({rel(e['view'], ROOT)})"
+    if e["kind"] == "convertible":
+        return "변환 중"
+    return "PDF 필요"
+
+
+def index_aasx(it):
+    a = it["aasx"][-1]
+    v = it.get("views", {}).get(a["file"])
+    return f"[v{a.get('version') or '?'}]({rel(v or a['file'], ROOT)})"
+
+
+def index_sim(it):
+    if it["youtube"]:
+        return f"[영상]({it['youtube'][0][1]})"
+    fs = it["videos"] or it["files"]["시뮬레이션"]
+    return f"[보기]({rel(fs[0], ROOT)})" if fs else ""
 
 
 def build_index(items):
-    counts = {k: sum(1 for i in items if i["status"] == k) for k in STATUS_ICON}
-    warn = sum(1 for i in items if i["issues"])
-    nopv = sum(len(i["no_preview"]) for i in items)
+    on = [i for i in items if i["aasx"]]
+    off = [i for i in items if not i["aasx"]]
+    full = sum(1 for i in items if i["status"] == "완비")
+    warn = [i for i in items if i["issues"]]
     L = [
         "# AAS 참조모델 산출물 아카이브",
         "",
-        "> 🤖 이 페이지는 **자동 생성**됩니다. 직접 고치지 말고, 장비 폴더에 파일을 올리기만 하세요.",
-        "> 회의용 **데모 저장소**입니다. 들어 있는 파일은 모두 "
-        "[IODA-Lab/aas-portal-site](https://github.com/IODA-Lab/aas-portal-site)의 실제 파일입니다 "
-        "(AASX 49개, 원본 PDF · 영상 · 참고자료, 스트레쳐 개발계획서 · 가이던스).",
+        "장비별 개발계획서 · 가이던스 · AASX · 시뮬레이션을 모은 저장소입니다. 표의 링크를 누르면 바로 열립니다.",
         "",
-        f"📺 시뮬레이션 영상: [한양대학교 제조데이터 YouTube 채널]({YOUTUBE_CHANNEL})",
+        "> 🤖 이 페이지는 **자동 생성**됩니다. 직접 고치지 말고, 장비 폴더에 파일을 올리기만 하세요. "
+        "회의용 **데모 저장소**이며, 파일은 [IODA-Lab/aas-portal-site](https://github.com/IODA-Lab/aas-portal-site)의 실제 파일입니다.",
         "",
-    ]
-    L += [
-        "**진행 현황** · " + " · ".join(f"{STATUS_ICON[k]} {k} {counts[k]}" for k in STATUS_ICON)
-        + f" · ⚠️ 확인 필요 {warn} · 전체 {len(items)}종",
+        f"**{len(items)}종 중 {len(on)}종 등록** · 필수 문서(계획서 · 가이던스 · AASX) 완비 {full}종 · "
+        f"확인 필요 {len(warn)}종 · [시뮬레이션 영상 (YouTube)]({YOUTUBE_CHANNEL})",
         "",
-        "| 장비군 | 장비 | 상태 | 계획서 | 가이던스 | AASX | 시뮬레이션 | AASX 버전 | 서브모델 | 최근 올린 사람 | 수정일 |",
-        "|---|---|---|:-:|:-:|:-:|:-:|:-:|:-:|---|---|",
+        "| 장비군 | 장비 | AASX | 개발계획서 | 가이던스 | 시뮬레이션 |",
+        "|---|---|:-:|:-:|:-:|:-:|",
     ]
     prev = None
-    for it in items:
-        a = it["aasx"][0] if it["aasx"] else {}
-        g = f"**{it['group']}**" if it["group"] != prev else ""
+    for it in on:
+        g = it["group"] if it["group"] != prev else ""
         prev = it["group"]
-        name = f"[{it['name']}]({rel(it['dir'], ROOT)})" + (" ⚠️" if it["issues"] else "")
-        def mark(s):
-            if s == "시뮬레이션":
-                return "▶️" if it["youtube"] else ("🎬" if it["videos"] else ("✅" if it["files"][s] else "—"))
-            return "✅" if it["files"][s] else "—"
-        marks = " | ".join(mark(s) for s in ["개발계획서", "가이던스", "AASX", "시뮬레이션"])
-        L.append(
-            f"| {g} | {name} | {status(it)} | {marks} | {a.get('version') or '-'} "
-            f"| {len(a.get('submodels') or []) or '-'} | {it['author'] or '-'} | {it['updated'] or '-'} |"
-        )
-    L += ["", "## ⚠️ 확인 필요", ""]
-    issues = [(it, m) for it in items for m in it["issues"]]
-    L += [f"- **{it['group']} / {it['name']}** — {m}" for it, m in issues] or ["- 없음"]
-    if nopv:
-        L += ["", f"> ℹ️ hwp · hwpx 문서 {nopv}개는 브라우저에서 바로 볼 수 없습니다. "
-                  "한글에서 **PDF로 저장해 같은 폴더에 함께 올리면** 자동으로 '바로 보기'가 연결됩니다."]
+        en = en_name(it)
+        name = f"[{it['name']}]({rel(it['dir'], ROOT)})" + (" ⚠" if it["issues"] else "") + (f"<br><sub>{en}</sub>" if en else "")
+        L.append(f"| {g} | {name} | {index_aasx(it)} | {index_doc(it, '개발계획서')} | "
+                 f"{index_doc(it, '가이던스')} | {index_sim(it)} |")
+    L += ["", "⚠ 확인 필요 · 빈칸은 아직 올라오지 않은 자료 · PDF 필요는 hwp만 있어 바로 볼 수 없는 문서", "", "---", ""]
+
+    L += [f"<details><summary>확인 필요 {len(warn)}종</summary>", "", "| 장비 | 고칠 내용 |", "|---|---|"]
+    for it in warn:
+        short = [re.sub(r" \(예: [^)]*\)", "", m).replace("|", "/") for m in it["issues"]]
+        L.append(f"| [{it['name']}]({rel(it['dir'], ROOT)}) | " + "<br>".join(short) + " |")
+    L += ["", "AASX 이름 규칙: `영문장비명_v0.0.1.aasx` (v는 소문자, `_AAS_` 같은 덧붙임 없이)", "", "</details>", ""]
+
+    groups = {}
+    for it in off:
+        groups.setdefault(it["group"], []).append(f"[{it['name']}]({rel(it['dir'], ROOT)})")
+    L += [f"<details><summary>아직 자료가 없는 장비 {len(off)}종</summary>", "", "| 장비군 | 장비 |", "|---|---|"]
+    L += [f"| {g} | {', '.join(ns)} |" for g, ns in groups.items()]
+    L += ["", "</details>", ""]
+
     L += [
+        "<details><summary>자료 올리는 법</summary>",
         "",
-        "## 사용 방법",
-        "",
-        "1. `equipment/<장비군>/<장비>/` 아래 알맞은 폴더에 파일을 올립니다: "
+        "1. `equipment/<장비군>/<장비>/` 아래 알맞은 폴더에 원본을 올립니다: "
         "`개발계획서/` · `가이던스/` · `AASX/` · `시뮬레이션/` · `참고자료/`",
-        "2. 끝입니다. push하면 GitHub Actions가 docx를 PDF로 바꾸고, AASX 열람 페이지와 이 표 · 장비별 페이지를 다시 만듭니다.",
+        "2. push하면 GitHub Actions가 docx · pptx · xlsx를 PDF로 바꾸고, AASX 열람 페이지와 이 표 · 장비별 페이지를 다시 만듭니다.",
         "",
-        "### 파일 이름 규칙",
+        "**파일 이름 규칙**",
         "",
         "| 폴더 | 이름 | 예 (장비: PET 사출성형기) |",
         "|---|---|---|",
@@ -97,27 +126,22 @@ def build_index(items):
         f"| `개발계획서/` | `{DOC_PREFIX['개발계획서']}<장비명>` | `{DOC_PREFIX['개발계획서']}PET사출성형기.hwp` + 같은 이름의 `.pdf` |",
         "| `AASX/` | `<영문장비명>_v<버전>.aasx` | `PETInjectionMoldingMachine_v0.0.1.aasx` |",
         "",
-        "- 장비명은 폴더 이름과 같게 씁니다. 띄어쓰기는 빼거나 `_`로 써도 됩니다.",
-        "- 한글(hwp · hwpx)은 브라우저에서 바로 볼 수 없으므로 **PDF로 저장해 같은 이름으로 함께** 올려 주세요.",
+        "- 한글(hwp · hwpx)은 자동 변환이 안 되므로 **PDF로 저장해 같은 이름으로 함께** 올립니다.",
+        f"- 시뮬레이션 영상은 [YouTube 채널]({YOUTUBE_CHANNEL})에 올리고, 주소를 `시뮬레이션/링크.md`에 적습니다. "
+        "표에 '영상'으로 표시되고 누르면 바로 재생됩니다. mp4를 직접 올리면 내려받아야 재생됩니다 (파일당 100MB 제한).",
         "",
-        "### 시뮬레이션 영상",
+        "**자동으로 채워지는 값**",
         "",
-        f"- 영상은 [YouTube 채널]({YOUTUBE_CHANNEL})에 올리고, 영상 주소를 적은 텍스트 파일(`.txt` 또는 `.md`)을 "
-        "장비의 `시뮬레이션/` 폴더에 올립니다. 장비 페이지에 썸네일이 표시되고, 누르면 YouTube에서 재생됩니다.",
-        "- 주소 형식은 `https://youtu.be/…` · `https://www.youtube.com/watch?v=…` 모두 됩니다. 한 파일에 여러 개를 적어도 됩니다.",
-        "- mp4를 직접 올려도 보관은 되지만 다운로드해야 재생됩니다 (파일당 100MB 제한).",
-        "",
-        "| 자동으로 채워지는 값 | 어디서 가져오나 |",
+        "| 값 | 어디서 가져오나 |",
         "|---|---|",
         "| 장비군 · 장비명 | 폴더 이름 |",
-        "| 상태 | 산출물 3종(개발계획서 · 가이던스 · AASX) 중 몇 개가 올라왔는지 |",
-        "| AASX 버전 | 파일명의 `_v0.0.1` 부분 |",
-        "| idShort · 서브모델 목록 | AASX 파일을 직접 열어서 읽음 |",
-        "| 최근 올린 사람 · 수정일 | git 커밋 기록 (자동 생성 파일 제외) |",
+        "| 영문명 · AASX 버전 | AASX 파일 이름 (`영문장비명_v0.0.1`) |",
+        "| 보기 링크 | 바로 열리는 PDF · AASX 열람 페이지 · YouTube 주소 |",
         "| 바로 보기용 PDF | docx · pptx · xlsx를 LibreOffice로 자동 변환 |",
         "| AASX 열람 페이지 | AASX를 열어 서브모델 · 요소 · 값 · semanticId를 표로 펼침 (장비 폴더의 `gen/`) |",
-        "| YouTube 썸네일 · 제목 | `시뮬레이션/` 폴더의 텍스트 파일에 적힌 YouTube 주소 |",
         "| 확인 필요 | 파일 이름 규칙, AASX 개수, 내용이 똑같은 중복 파일 |",
+        "",
+        "</details>",
         "",
     ]
     return "\n".join(L)
@@ -154,14 +178,9 @@ def build_equipment(it):
     ]
     if it.get("thumb"):
         L += [f'<img src="{rel(it["thumb"], d)}" alt="{it["name"]}" height="160" align="right">', ""]
-    L += [
-        "| 항목 | 내용 |",
-        "|---|---|",
-        f"| 상태 | {status(it)} |",
-        f"| 최근 올린 사람 | {it['author'] or '-'} |",
-        f"| 수정일 | {it['updated'] or '-'} |",
-        "",
-    ]
+    have = [s for s in REQUIRED if it["files"][s]]
+    L += [f"필수 산출물 {len(have)}/{len(REQUIRED)} · " + " · ".join(
+        f"{s} {'있음' if it['files'][s] else '없음'}" for s in REQUIRED), ""]
     if it["issues"]:
         L += ["> [!WARNING]", "> **확인 필요**", ">"] + [f"> - {m}" for m in it["issues"]] + [""]
 
