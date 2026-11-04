@@ -8,7 +8,7 @@
 
 | 항목 | 내용 |
 |---|---|
-| 상태 | 🟡 작성 중 |
+| 상태 | 🟢 완비 |
 | 최근 올린 사람 | Claude |
 | 수정일 | 2026-11-04 |
 
@@ -16,7 +16,7 @@
 
 | 구분 | 파일 | 크기 | 바로 보기 |
 |---|---|---|---|
-| 📄 개발계획서 | _아직 없음_ | | |
+| 📄 개발계획서 | [참조모델_개발계획서_날염기.docx](%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C/%EC%B0%B8%EC%A1%B0%EB%AA%A8%EB%8D%B8_%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C_%EB%82%A0%EC%97%BC%EA%B8%B0.docx) | 2.1 MB | [👁 바로 보기](%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C/%EC%B0%B8%EC%A1%B0%EB%AA%A8%EB%8D%B8_%EA%B0%9C%EB%B0%9C%EA%B3%84%ED%9A%8D%EC%84%9C_%EB%82%A0%EC%97%BC%EA%B8%B0.pdf) |
 | 📘 가이던스 | [AAS_활용_가이던스_날염기.pdf](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/AAS_%ED%99%9C%EC%9A%A9_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4_%EB%82%A0%EC%97%BC%EA%B8%B0.pdf) | 9.7 MB | [👁 바로 보기](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/AAS_%ED%99%9C%EC%9A%A9_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4_%EB%82%A0%EC%97%BC%EA%B8%B0.pdf) |
 | 🧩 AASX | [TextilePrintingMachine_v0.0.1.aasx](AASX/TextilePrintingMachine_v0.0.1.aasx) | 1.7 MB | [👁 열람 페이지](gen/TextilePrintingMachine_v0.0.1.md) |
 | 🎬 시뮬레이션 | [링크.md](%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98/%EB%A7%81%ED%81%AC.md) | 173 B | [👁 바로 보기](%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98/%EB%A7%81%ED%81%AC.md) |
