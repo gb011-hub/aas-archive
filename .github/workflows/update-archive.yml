@@ -56,7 +56,7 @@ jobs:
 
       - name: 결과 커밋
         run: |
-          git add -A -- README.md 'equipment/**/README.md' 'equipment/**/*.pdf' 'equipment/**/gen'
+          git add -A -- README.md equipment   # 자동 생성물(README · 변환 PDF · gen/)만 바뀌므로 폴더째 추가
           git diff --cached --quiet && exit 0
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
