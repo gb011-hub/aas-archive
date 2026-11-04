@@ -22,7 +22,7 @@
 | 구분 | 파일 | 크기 | 바로 보기 |
 |---|---|---|---|
 | 📄 개발계획서 | _아직 없음_ | | |
-| 📘 가이던스 | [SMD마운터_가이던스.pdf](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/SMD%EB%A7%88%EC%9A%B4%ED%84%B0_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4.pdf) | 6.5 MB | [👁 바로 보기](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/SMD%EB%A7%88%EC%9A%B4%ED%84%B0_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4.pdf) |
+| 📘 가이던스 | [AAS_활용_가이던스_SMD마운터.pdf](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/AAS_%ED%99%9C%EC%9A%A9_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4_SMD%EB%A7%88%EC%9A%B4%ED%84%B0.pdf) | 6.5 MB | [👁 바로 보기](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/AAS_%ED%99%9C%EC%9A%A9_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4_SMD%EB%A7%88%EC%9A%B4%ED%84%B0.pdf) |
 | 🧩 AASX | [SMD_마운터.aasx](AASX/SMD_%EB%A7%88%EC%9A%B4%ED%84%B0.aasx) | 360 KB | [👁 열람 페이지](gen/SMD_%EB%A7%88%EC%9A%B4%ED%84%B0.md) |
 
 ## AAS 구성 — `SMDMounter`

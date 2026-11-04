@@ -5,12 +5,29 @@
     python tools/build_readme.py          # README 생성
     python tools/build_readme.py --check  # 확인 필요 항목만 출력 (있으면 종료 코드 1)
 """
+import json
 import shutil
 import sys
+import urllib.request
 from urllib.parse import quote
 
 import aasx_view
-from archive_lib import ICON, REQUIRED, ROOT, SECTIONS, STATUS_ICON, scan, size
+from archive_lib import (DOC_PREFIX, ICON, REQUIRED, ROOT, SECTIONS, STATUS_ICON, YOUTUBE_CHANNEL,
+                         scan, size)
+
+_titles = {}
+
+
+def youtube_title(url):
+    """YouTube oEmbed로 영상 제목을 가져온다 (키 불필요). 네트워크가 막혀 있으면 None."""
+    if url not in _titles:
+        try:
+            q = "https://www.youtube.com/oembed?format=json&url=" + quote(url, safe="")
+            with urllib.request.urlopen(q, timeout=8) as r:
+                _titles[url] = json.load(r).get("title")
+        except Exception:
+            _titles[url] = None
+    return _titles[url]
 
 
 def rel(path, base):
@@ -33,6 +50,8 @@ def build_index(items):
         "[IODA-Lab/aas-portal-site](https://github.com/IODA-Lab/aas-portal-site)의 실제 파일입니다 "
         "(AASX 49개, 원본 PDF · 영상 · 참고자료, 스트레쳐 개발계획서 · 가이던스).",
         "",
+        f"📺 시뮬레이션 영상: [한양대학교 제조데이터 YouTube 채널]({YOUTUBE_CHANNEL})",
+        "",
     ]
     L += [
         "**진행 현황** · " + " · ".join(f"{STATUS_ICON[k]} {k} {counts[k]}" for k in STATUS_ICON)
@@ -47,8 +66,11 @@ def build_index(items):
         g = f"**{it['group']}**" if it["group"] != prev else ""
         prev = it["group"]
         name = f"[{it['name']}]({rel(it['dir'], ROOT)})" + (" ⚠️" if it["issues"] else "")
-        marks = " | ".join(("🎬" if s == "시뮬레이션" and it["videos"] else "✅") if it["files"][s] else "—"
-                           for s in ["개발계획서", "가이던스", "AASX", "시뮬레이션"])
+        def mark(s):
+            if s == "시뮬레이션":
+                return "▶️" if it["youtube"] else ("🎬" if it["videos"] else ("✅" if it["files"][s] else "—"))
+            return "✅" if it["files"][s] else "—"
+        marks = " | ".join(mark(s) for s in ["개발계획서", "가이던스", "AASX", "시뮬레이션"])
         L.append(
             f"| {g} | {name} | {status(it)} | {marks} | {a.get('version') or '-'} "
             f"| {len(a.get('submodels') or []) or '-'} | {it['author'] or '-'} | {it['updated'] or '-'} |"
@@ -65,7 +87,25 @@ def build_index(items):
         "",
         "1. `equipment/<장비군>/<장비>/` 아래 알맞은 폴더에 파일을 올립니다: "
         "`개발계획서/` · `가이던스/` · `AASX/` · `시뮬레이션/` · `참고자료/`",
-        "2. 끝입니다. push하면 GitHub Actions가 docx를 PDF로 바꾸고, 이 표와 장비별 페이지를 다시 만듭니다.",
+        "2. 끝입니다. push하면 GitHub Actions가 docx를 PDF로 바꾸고, AASX 열람 페이지와 이 표 · 장비별 페이지를 다시 만듭니다.",
+        "",
+        "### 파일 이름 규칙",
+        "",
+        "| 폴더 | 이름 | 예 (장비: PET 사출성형기) |",
+        "|---|---|---|",
+        f"| `가이던스/` | `{DOC_PREFIX['가이던스']}<장비명>` | `{DOC_PREFIX['가이던스']}PET사출성형기.docx` |",
+        f"| `개발계획서/` | `{DOC_PREFIX['개발계획서']}<장비명>` | `{DOC_PREFIX['개발계획서']}PET사출성형기.hwp` + 같은 이름의 `.pdf` |",
+        "| `AASX/` | `<영문장비명>_v<버전>.aasx` | `PETInjectionMoldingMachine_v0.0.1.aasx` |",
+        "",
+        "- 장비명은 폴더 이름과 같게 씁니다. 띄어쓰기는 빼거나 `_`로 써도 됩니다.",
+        "- 한글(hwp · hwpx)은 브라우저에서 바로 볼 수 없으므로 **PDF로 저장해 같은 이름으로 함께** 올려 주세요.",
+        "",
+        "### 시뮬레이션 영상",
+        "",
+        f"- 영상은 [YouTube 채널]({YOUTUBE_CHANNEL})에 올리고, 영상 주소를 적은 텍스트 파일(`.txt` 또는 `.md`)을 "
+        "장비의 `시뮬레이션/` 폴더에 올립니다. 장비 페이지에 썸네일이 표시되고, 누르면 YouTube에서 재생됩니다.",
+        "- 주소 형식은 `https://youtu.be/…` · `https://www.youtube.com/watch?v=…` 모두 됩니다. 한 파일에 여러 개를 적어도 됩니다.",
+        "- mp4를 직접 올려도 보관은 되지만 다운로드해야 재생됩니다 (파일당 100MB 제한).",
         "",
         "| 자동으로 채워지는 값 | 어디서 가져오나 |",
         "|---|---|",
@@ -76,6 +116,7 @@ def build_index(items):
         "| 최근 올린 사람 · 수정일 | git 커밋 기록 (자동 생성 파일 제외) |",
         "| 바로 보기용 PDF | docx · pptx · xlsx를 LibreOffice로 자동 변환 |",
         "| AASX 열람 페이지 | AASX를 열어 서브모델 · 요소 · 값 · semanticId를 표로 펼침 (장비 폴더의 `gen/`) |",
+        "| YouTube 썸네일 · 제목 | `시뮬레이션/` 폴더의 텍스트 파일에 적힌 YouTube 주소 |",
         "| 확인 필요 | 파일 이름 규칙, AASX 개수, 내용이 똑같은 중복 파일 |",
         "",
     ]
@@ -151,6 +192,12 @@ def build_equipment(it):
               + (f" · **[👁 요소 전체 펼쳐 보기]({rel(view, d)})**" if view else "") + ":", "",
               "| # | 서브모델 idShort |", "|:-:|---|"]
         L += [f"| {n} | {s} |" for n, s in enumerate(subs, 1)] + [""]
+    if it["youtube"]:
+        L += ["## ▶️ 시뮬레이션 영상", "", "썸네일을 누르면 YouTube에서 재생됩니다.", ""]
+        for vid, url in it["youtube"]:
+            title = youtube_title(url) or "YouTube에서 보기"
+            L += [f'<a href="{url}"><img src="https://img.youtube.com/vi/{vid}/hqdefault.jpg" '
+                  f'alt="{title}" width="360"></a>', "", f"**{title}**", ""]
     if it["uml"]:
         L += ["## 서브모델 설계 (UML)", ""]
         L += [f"- [{f.name}]({rel(f, d)})" for f in it["uml"]] + [""]

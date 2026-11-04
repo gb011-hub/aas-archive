@@ -22,10 +22,45 @@ AASX_NAME = re.compile(r"^[A-Z][A-Za-z0-9]*_v\d+\.\d+\.\d+(_\d{6})?\.aasx$")
 VERSION = re.compile(r"_v(\d+\.\d+\.\d+)", re.I)
 IGNORE = {".gitkeep", ".DS_Store", "README.md", "index.html"}
 
-VIEWABLE = {".pdf", ".md", ".png", ".jpg", ".jpeg", ".gif", ".svg"}  # GitHub 화면에서 바로 보이는 형식
+VIEWABLE = {".pdf", ".md", ".txt", ".png", ".jpg", ".jpeg", ".gif", ".svg"}  # GitHub 화면에서 바로 보이는 형식
 CONVERTIBLE = {".docx", ".doc", ".pptx", ".xlsx"}                   # LibreOffice로 PDF 자동 변환
 NO_PREVIEW_DOC = {".hwp", ".hwpx"}                                    # 자동 변환 불가 → PDF를 함께 올려야 함
 VIDEO = {".mp4", ".webm", ".mov"}
+LINK_TEXT = {".md", ".txt"}                                           # YouTube 주소를 적는 파일
+
+YOUTUBE_CHANNEL = "https://www.youtube.com/@%ED%95%9C%EC%96%91%EB%8C%80%ED%95%99%EA%B5%90%EC%A0%9C%EC%A1%B0%EB%8D%B0%EC%9D%B4%ED%84%B0"
+YOUTUBE_ID = re.compile(
+    r"(?:youtube\.com/(?:watch\?(?:[^\s)\]]*&)?v=|shorts/|live/|embed/)|youtu\.be/)([A-Za-z0-9_-]{11})")
+
+# 문서 이름 규칙: <접두어>_<장비명>.<확장자>  (장비명은 폴더 이름, 띄어쓰기는 빼거나 _로 써도 됨)
+DOC_PREFIX = {"가이던스": "AAS_활용_가이던스_", "개발계획서": "참조모델_개발계획서_"}
+
+
+def _norm(s):
+    return re.sub(r"[\s_]+", "", s).lower()
+
+
+def doc_name_ok(section, stem, equipment):
+    """문서 파일 이름이 '<접두어>_<장비명>' 규칙을 따르는지. 장비명 뒤에 _v1 같은 덧붙임은 허용."""
+    prefix = DOC_PREFIX[section]
+    if not stem.startswith(prefix):
+        return False
+    return _norm(stem[len(prefix):]).startswith(_norm(equipment))
+
+
+def youtube_links(files):
+    """시뮬레이션 폴더의 md/txt 파일에서 YouTube 영상 주소를 찾아 [(영상 ID, 원래 주소)]로 돌려준다."""
+    found, seen = [], set()
+    for f in files:
+        if f.suffix.lower() not in LINK_TEXT:
+            continue
+        text = f.read_text(encoding="utf-8", errors="replace")
+        for m in YOUTUBE_ID.finditer(text):
+            vid = m.group(1)
+            if vid not in seen:
+                seen.add(vid)
+                found.append((vid, f"https://www.youtube.com/watch?v={vid}"))
+    return found
 
 
 def git_last(files):
@@ -157,6 +192,13 @@ def scan():
         it["no_preview"] = [e["file"] for es in it["entries"].values() for e in es
                             if e["kind"] == "no_preview" and not e["view"]]
         it["videos"] = [e["file"] for e in it["entries"]["시뮬레이션"] if e["kind"] == "video"]
+        it["youtube"] = youtube_links(it["files"]["시뮬레이션"])
+
+        for sec, prefix in DOC_PREFIX.items():
+            for e in it["entries"][sec]:
+                if not doc_name_ok(sec, e["file"].stem, it["name"]):
+                    example = f"{prefix}{it['name'].replace(' ', '')}{e['file'].suffix}"
+                    it["issues"].append(f"{sec} 파일 이름 규칙 위반: `{e['file'].name}` (예: `{example}`)")
         items.append(it)
     return items
 
