@@ -286,6 +286,7 @@ def _rows(elems, depth, out):
         kind = KIND_KO.get(e["kind"], e["kind"])
         if e["children"]:
             kind += f" ({len(e['children'])})"
+        kind = kind.replace(" ", "&nbsp;")  # 좁은 화면에서 글자 단위로 줄바꿈되지 않게
         out.append(f"| {name} | {kind} | {_cell(e['value'])} | {sem} |")
         _rows(e["children"], depth + 1, out)
 
