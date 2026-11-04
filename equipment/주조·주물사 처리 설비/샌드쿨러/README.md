@@ -4,6 +4,8 @@
 
 > 🤖 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 
+<img src="gen/SandCooler_AAS_v0.0.1_thumbnail.jpg" alt="샌드쿨러" height="160" align="right">
+
 | 항목 | 내용 |
 |---|---|
 | 상태 | 🟡 작성 중 |
@@ -21,11 +23,11 @@
 |---|---|---|---|
 | 📄 개발계획서 | _아직 없음_ | | |
 | 📘 가이던스 | _아직 없음_ | | |
-| 🧩 AASX | [SandCooler_AAS_v0.0.1.aasx](AASX/SandCooler_AAS_v0.0.1.aasx) | 8.6 MB | 아래 AAS 구성 참고 |
+| 🧩 AASX | [SandCooler_AAS_v0.0.1.aasx](AASX/SandCooler_AAS_v0.0.1.aasx) | 8.6 MB | [👁 열람 페이지](gen/SandCooler_AAS_v0.0.1.md) |
 
 ## AAS 구성 — `SandCoolerAAS`
 
-`SandCooler_AAS_v0.0.1.aasx` 에서 읽은 서브모델 7개:
+`SandCooler_AAS_v0.0.1.aasx` 에서 읽은 서브모델 7개 · **[👁 요소 전체 펼쳐 보기](gen/SandCooler_AAS_v0.0.1.md)**:
 
 | # | 서브모델 idShort |
 |:-:|---|

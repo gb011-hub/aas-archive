@@ -4,6 +4,8 @@
 
 > 🤖 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 
+<img src="gen/FPDTransferRobot_v0.0.1_260930_thumbnail.jpg" alt="FPD 반송 로봇" height="160" align="right">
+
 | 항목 | 내용 |
 |---|---|
 | 상태 | 🟡 작성 중 |
@@ -16,11 +18,11 @@
 |---|---|---|---|
 | 📄 개발계획서 | _아직 없음_ | | |
 | 📘 가이던스 | _아직 없음_ | | |
-| 🧩 AASX | [FPDTransferRobot_v0.0.1_260930.aasx](AASX/FPDTransferRobot_v0.0.1_260930.aasx) | 2.9 MB | 아래 AAS 구성 참고 |
+| 🧩 AASX | [FPDTransferRobot_v0.0.1_260930.aasx](AASX/FPDTransferRobot_v0.0.1_260930.aasx) | 2.9 MB | [👁 열람 페이지](gen/FPDTransferRobot_v0.0.1_260930.md) |
 
 ## AAS 구성 — `FPDGlassSubstrateTransferRobot`
 
-`FPDTransferRobot_v0.0.1_260930.aasx` 에서 읽은 서브모델 7개:
+`FPDTransferRobot_v0.0.1_260930.aasx` 에서 읽은 서브모델 7개 · **[👁 요소 전체 펼쳐 보기](gen/FPDTransferRobot_v0.0.1_260930.md)**:
 
 | # | 서브모델 idShort |
 |:-:|---|

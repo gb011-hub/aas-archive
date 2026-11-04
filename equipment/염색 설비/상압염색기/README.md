@@ -4,6 +4,8 @@
 
 > 🤖 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 
+<img src="gen/AtmosphericDyeingMachine_v0.0.1_261005_thumbnail.jpg" alt="상압염색기" height="160" align="right">
+
 | 항목 | 내용 |
 |---|---|
 | 상태 | 🟡 작성 중 |
@@ -16,13 +18,13 @@
 |---|---|---|---|
 | 📄 개발계획서 | _아직 없음_ | | |
 | 📘 가이던스 | _아직 없음_ | | |
-| 🧩 AASX | [AtmosphericDyeingMachine_v0.0.1_261005.aasx](AASX/AtmosphericDyeingMachine_v0.0.1_261005.aasx) | 669 KB | 아래 AAS 구성 참고 |
+| 🧩 AASX | [AtmosphericDyeingMachine_v0.0.1_261005.aasx](AASX/AtmosphericDyeingMachine_v0.0.1_261005.aasx) | 669 KB | [👁 열람 페이지](gen/AtmosphericDyeingMachine_v0.0.1_261005.md) |
 | 🎬 시뮬레이션 | [상압염색기_그림_항목명_유지_v7.mp4](%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98/%EC%83%81%EC%95%95%EC%97%BC%EC%83%89%EA%B8%B0_%EA%B7%B8%EB%A6%BC_%ED%95%AD%EB%AA%A9%EB%AA%85_%EC%9C%A0%EC%A7%80_v7.mp4) | 29.3 MB | 다운로드 후 재생 |
 | 🔗 참고자료 | [참고링크.md](%EC%B0%B8%EA%B3%A0%EC%9E%90%EB%A3%8C/%EC%B0%B8%EA%B3%A0%EB%A7%81%ED%81%AC.md) | 7 KB | [👁 바로 보기](%EC%B0%B8%EA%B3%A0%EC%9E%90%EB%A3%8C/%EC%B0%B8%EA%B3%A0%EB%A7%81%ED%81%AC.md) |
 
 ## AAS 구성 — `AtmosphericDyeingMachine`
 
-`AtmosphericDyeingMachine_v0.0.1_261005.aasx` 에서 읽은 서브모델 8개:
+`AtmosphericDyeingMachine_v0.0.1_261005.aasx` 에서 읽은 서브모델 8개 · **[👁 요소 전체 펼쳐 보기](gen/AtmosphericDyeingMachine_v0.0.1_261005.md)**:
 
 | # | 서브모델 idShort |
 |:-:|---|

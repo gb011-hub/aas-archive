@@ -4,6 +4,8 @@
 
 > 🤖 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 
+<img src="gen/AutomaticPressFitMachine_v0.0.1_260930_thumbnail.jpg" alt="자동압입기" height="160" align="right">
+
 | 항목 | 내용 |
 |---|---|
 | 상태 | 🟡 작성 중 |
@@ -16,11 +18,11 @@
 |---|---|---|---|
 | 📄 개발계획서 | _아직 없음_ | | |
 | 📘 가이던스 | _아직 없음_ | | |
-| 🧩 AASX | [AutomaticPressFitMachine_v0.0.1_260930.aasx](AASX/AutomaticPressFitMachine_v0.0.1_260930.aasx) | 5.2 MB | 아래 AAS 구성 참고 |
+| 🧩 AASX | [AutomaticPressFitMachine_v0.0.1_260930.aasx](AASX/AutomaticPressFitMachine_v0.0.1_260930.aasx) | 5.2 MB | [👁 열람 페이지](gen/AutomaticPressFitMachine_v0.0.1_260930.md) |
 
 ## AAS 구성 — `AutomaticPressFitMachineAAS`
 
-`AutomaticPressFitMachine_v0.0.1_260930.aasx` 에서 읽은 서브모델 7개:
+`AutomaticPressFitMachine_v0.0.1_260930.aasx` 에서 읽은 서브모델 7개 · **[👁 요소 전체 펼쳐 보기](gen/AutomaticPressFitMachine_v0.0.1_260930.md)**:
 
 | # | 서브모델 idShort |
 |:-:|---|

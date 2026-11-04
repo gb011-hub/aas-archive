@@ -4,6 +4,8 @@
 
 > 🤖 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 
+<img src="gen/ShipWeldingRobot_v0.0.1_260930_thumbnail.jpg" alt="선박 용접용 로봇" height="160" align="right">
+
 | 항목 | 내용 |
 |---|---|
 | 상태 | 🟡 작성 중 |
@@ -16,11 +18,11 @@
 |---|---|---|---|
 | 📄 개발계획서 | _아직 없음_ | | |
 | 📘 가이던스 | _아직 없음_ | | |
-| 🧩 AASX | [ShipWeldingRobot_v0.0.1_260930.aasx](AASX/ShipWeldingRobot_v0.0.1_260930.aasx) | 485 KB | 아래 AAS 구성 참고 |
+| 🧩 AASX | [ShipWeldingRobot_v0.0.1_260930.aasx](AASX/ShipWeldingRobot_v0.0.1_260930.aasx) | 485 KB | [👁 열람 페이지](gen/ShipWeldingRobot_v0.0.1_260930.md) |
 
 ## AAS 구성 — `ShipWeldingRobot`
 
-`ShipWeldingRobot_v0.0.1_260930.aasx` 에서 읽은 서브모델 8개:
+`ShipWeldingRobot_v0.0.1_260930.aasx` 에서 읽은 서브모델 8개 · **[👁 요소 전체 펼쳐 보기](gen/ShipWeldingRobot_v0.0.1_260930.md)**:
 
 | # | 서브모델 idShort |
 |:-:|---|

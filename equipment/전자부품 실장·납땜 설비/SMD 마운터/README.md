@@ -4,6 +4,8 @@
 
 > 🤖 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 
+<img src="gen/SMD_%EB%A7%88%EC%9A%B4%ED%84%B0_thumbnail.jpg" alt="SMD 마운터" height="160" align="right">
+
 | 항목 | 내용 |
 |---|---|
 | 상태 | 🟡 작성 중 |
@@ -21,11 +23,11 @@
 |---|---|---|---|
 | 📄 개발계획서 | _아직 없음_ | | |
 | 📘 가이던스 | [SMD마운터_가이던스.pdf](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/SMD%EB%A7%88%EC%9A%B4%ED%84%B0_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4.pdf) | 6.5 MB | [👁 바로 보기](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/SMD%EB%A7%88%EC%9A%B4%ED%84%B0_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4.pdf) |
-| 🧩 AASX | [SMD_마운터.aasx](AASX/SMD_%EB%A7%88%EC%9A%B4%ED%84%B0.aasx) | 360 KB | 아래 AAS 구성 참고 |
+| 🧩 AASX | [SMD_마운터.aasx](AASX/SMD_%EB%A7%88%EC%9A%B4%ED%84%B0.aasx) | 360 KB | [👁 열람 페이지](gen/SMD_%EB%A7%88%EC%9A%B4%ED%84%B0.md) |
 
 ## AAS 구성 — `SMDMounter`
 
-`SMD_마운터.aasx` 에서 읽은 서브모델 7개:
+`SMD_마운터.aasx` 에서 읽은 서브모델 7개 · **[👁 요소 전체 펼쳐 보기](gen/SMD_%EB%A7%88%EC%9A%B4%ED%84%B0.md)**:
 
 | # | 서브모델 idShort |
 |:-:|---|

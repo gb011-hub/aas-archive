@@ -5,9 +5,11 @@
     python tools/build_readme.py          # README 생성
     python tools/build_readme.py --check  # 확인 필요 항목만 출력 (있으면 종료 코드 1)
 """
+import shutil
 import sys
 from urllib.parse import quote
 
+import aasx_view
 from archive_lib import ICON, REQUIRED, ROOT, SECTIONS, STATUS_ICON, scan, size
 
 
@@ -27,9 +29,9 @@ def build_index(items):
         "# AAS 참조모델 산출물 아카이브",
         "",
         "> 🤖 이 페이지는 **자동 생성**됩니다. 직접 고치지 말고, 장비 폴더에 파일을 올리기만 하세요.",
-        "> 회의용 **데모 저장소**입니다. AASX · 참고자료 · PDF · 영상은 "
-        "[IODA-Lab/aas-portal-site](https://github.com/IODA-Lab/aas-portal-site)의 실제 파일이고, "
-        "개발계획서 · 가이던스는 스트레쳐를 빼면 작은 자리표시 파일입니다.",
+        "> 회의용 **데모 저장소**입니다. 들어 있는 파일은 모두 "
+        "[IODA-Lab/aas-portal-site](https://github.com/IODA-Lab/aas-portal-site)의 실제 파일입니다 "
+        "(AASX 49개, 원본 PDF · 영상 · 참고자료, 스트레쳐 개발계획서 · 가이던스).",
         "",
     ]
     L += [
@@ -73,6 +75,7 @@ def build_index(items):
         "| idShort · 서브모델 목록 | AASX 파일을 직접 열어서 읽음 |",
         "| 최근 올린 사람 · 수정일 | git 커밋 기록 (자동 생성 파일 제외) |",
         "| 바로 보기용 PDF | docx · pptx · xlsx를 LibreOffice로 자동 변환 |",
+        "| AASX 열람 페이지 | AASX를 열어 서브모델 · 요소 · 값 · semanticId를 표로 펼침 (장비 폴더의 `gen/`) |",
         "| 확인 필요 | 파일 이름 규칙, AASX 개수, 내용이 똑같은 중복 파일 |",
         "",
     ]
@@ -93,7 +96,8 @@ def view_cell(e, it):
     if k == "no_preview":
         return "❌ PDF를 함께 올려 주세요"
     if k == "aasx":
-        return "아래 AAS 구성 참고"
+        v = it.get("views", {}).get(e["file"])
+        return f"[👁 열람 페이지]({rel(v, d)})" if v else "열람 페이지 생성 실패"
     return "다운로드"
 
 
@@ -106,6 +110,10 @@ def build_equipment(it):
         "",
         "> 🤖 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.",
         "",
+    ]
+    if it.get("thumb"):
+        L += [f'<img src="{rel(it["thumb"], d)}" alt="{it["name"]}" height="160" align="right">', ""]
+    L += [
         "| 항목 | 내용 |",
         "|---|---|",
         f"| 상태 | {status(it)} |",
@@ -137,14 +145,40 @@ def build_equipment(it):
             continue
         seen.add(a["sha1"])
         subs = a.get("submodels") or []
+        view = it.get("views", {}).get(a["file"])
         L += [f"## AAS 구성 — `{a.get('idShort') or '?'}`", "",
-              f"`{a['file'].name}` 에서 읽은 서브모델 {len(subs)}개:", "",
+              f"`{a['file'].name}` 에서 읽은 서브모델 {len(subs)}개"
+              + (f" · **[👁 요소 전체 펼쳐 보기]({rel(view, d)})**" if view else "") + ":", "",
               "| # | 서브모델 idShort |", "|:-:|---|"]
         L += [f"| {n} | {s} |" for n, s in enumerate(subs, 1)] + [""]
     if it["uml"]:
         L += ["## 서브모델 설계 (UML)", ""]
         L += [f"- [{f.name}]({rel(f, d)})" for f in it["uml"]] + [""]
     return "\n".join(L)
+
+
+def build_views(it):
+    """장비 폴더의 gen/에 AASX 열람 페이지와 썸네일을 만든다. gen/은 매번 새로 만든다."""
+    d = it["dir"]
+    gen = d / "gen"
+    if gen.exists():
+        shutil.rmtree(gen)
+    it["views"], it["thumb"] = {}, None
+    for a in it["aasx"]:
+        f = a["file"]
+        gen.mkdir(exist_ok=True)
+        thumb_name = None
+        t = aasx_view.read_thumbnail(f)
+        if t:
+            thumb_name = f"{f.stem}_thumbnail{t[0]}"
+            (gen / thumb_name).write_bytes(t[1])
+            it["thumb"] = it["thumb"] or gen / thumb_name
+        model = aasx_view.read_model(f)
+        page = gen / f"{f.stem}.md"
+        page.write_text(aasx_view.render(
+            f, model, equipment_readme="../README.md", aasx_link=quote(f"../{f.relative_to(d).as_posix()}"),
+            thumb_name=thumb_name, size_text=size(f.stat().st_size)), encoding="utf-8")
+        it["views"][f] = page
 
 
 def main():
@@ -156,10 +190,12 @@ def main():
         n = sum(len(i["issues"]) for i in items)
         print(f"{len(items)}개 장비, 확인 필요 {n}건")
         sys.exit(1 if n else 0)
+    for it in items:
+        build_views(it)
     (ROOT / "README.md").write_text(build_index(items), encoding="utf-8")
     for it in items:
         (it["dir"] / "README.md").write_text(build_equipment(it), encoding="utf-8")
-    print(f"README 생성: 전체 1개 + 장비 {len(items)}개")
+    print(f"README 생성: 전체 1개 + 장비 {len(items)}개, AASX 열람 페이지 {sum(len(i['views']) for i in items)}개")
 
 
 if __name__ == "__main__":

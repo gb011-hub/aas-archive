@@ -21,11 +21,11 @@
 |---|---|---|---|
 | 📄 개발계획서 | _아직 없음_ | | |
 | 📘 가이던스 | _아직 없음_ | | |
-| 🧩 AASX | [LadleHeater_AAS_v0.0.1.aasx](AASX/LadleHeater_AAS_v0.0.1.aasx) | 206 KB | 아래 AAS 구성 참고 |
+| 🧩 AASX | [LadleHeater_AAS_v0.0.1.aasx](AASX/LadleHeater_AAS_v0.0.1.aasx) | 206 KB | [👁 열람 페이지](gen/LadleHeater_AAS_v0.0.1.md) |
 
 ## AAS 구성 — `LadleHeaterAAS`
 
-`LadleHeater_AAS_v0.0.1.aasx` 에서 읽은 서브모델 7개:
+`LadleHeater_AAS_v0.0.1.aasx` 에서 읽은 서브모델 7개 · **[👁 요소 전체 펼쳐 보기](gen/LadleHeater_AAS_v0.0.1.md)**:
 
 | # | 서브모델 idShort |
 |:-:|---|

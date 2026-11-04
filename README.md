@@ -1,7 +1,7 @@
 # AAS 참조모델 산출물 아카이브
 
 > 🤖 이 페이지는 **자동 생성**됩니다. 직접 고치지 말고, 장비 폴더에 파일을 올리기만 하세요.
-> 회의용 **데모 저장소**입니다. AASX · 참고자료 · PDF · 영상은 [IODA-Lab/aas-portal-site](https://github.com/IODA-Lab/aas-portal-site)의 실제 파일이고, 개발계획서 · 가이던스는 스트레쳐를 빼면 작은 자리표시 파일입니다.
+> 회의용 **데모 저장소**입니다. 들어 있는 파일은 모두 [IODA-Lab/aas-portal-site](https://github.com/IODA-Lab/aas-portal-site)의 실제 파일입니다 (AASX 49개, 원본 PDF · 영상 · 참고자료, 스트레쳐 개발계획서 · 가이던스).
 
 **진행 현황** · ⚪ 예정 23 · 🟡 작성 중 46 · 🟢 완비 1 · ⚠️ 확인 필요 20 · 전체 70종
 
@@ -117,4 +117,5 @@
 | idShort · 서브모델 목록 | AASX 파일을 직접 열어서 읽음 |
 | 최근 올린 사람 · 수정일 | git 커밋 기록 (자동 생성 파일 제외) |
 | 바로 보기용 PDF | docx · pptx · xlsx를 LibreOffice로 자동 변환 |
+| AASX 열람 페이지 | AASX를 열어 서브모델 · 요소 · 값 · semanticId를 표로 펼침 (장비 폴더의 `gen/`) |
 | 확인 필요 | 파일 이름 규칙, AASX 개수, 내용이 똑같은 중복 파일 |

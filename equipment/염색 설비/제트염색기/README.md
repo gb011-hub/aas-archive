@@ -16,11 +16,11 @@
 |---|---|---|---|
 | 📄 개발계획서 | _아직 없음_ | | |
 | 📘 가이던스 | _아직 없음_ | | |
-| 🧩 AASX | [JetDyeingMachine_v0.0.2.aasx](AASX/JetDyeingMachine_v0.0.2.aasx) | 404 KB | 아래 AAS 구성 참고 |
+| 🧩 AASX | [JetDyeingMachine_v0.0.2.aasx](AASX/JetDyeingMachine_v0.0.2.aasx) | 404 KB | [👁 열람 페이지](gen/JetDyeingMachine_v0.0.2.md) |
 
 ## AAS 구성 — `JetDyeingMachineAAS`
 
-`JetDyeingMachine_v0.0.2.aasx` 에서 읽은 서브모델 8개:
+`JetDyeingMachine_v0.0.2.aasx` 에서 읽은 서브모델 8개 · **[👁 요소 전체 펼쳐 보기](gen/JetDyeingMachine_v0.0.2.md)**:
 
 | # | 서브모델 idShort |
 |:-:|---|

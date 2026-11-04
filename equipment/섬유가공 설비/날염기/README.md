@@ -4,6 +4,8 @@
 
 > 🤖 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 
+<img src="gen/TextilePrintingMachine_v0.0.1_thumbnail.jpg" alt="날염기" height="160" align="right">
+
 | 항목 | 내용 |
 |---|---|
 | 상태 | 🟡 작성 중 |
@@ -16,13 +18,13 @@
 |---|---|---|---|
 | 📄 개발계획서 | _아직 없음_ | | |
 | 📘 가이던스 | [날염기_가이던스.pdf](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/%EB%82%A0%EC%97%BC%EA%B8%B0_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4.pdf) | 9.7 MB | [👁 바로 보기](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/%EB%82%A0%EC%97%BC%EA%B8%B0_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4.pdf) |
-| 🧩 AASX | [TextilePrintingMachine_v0.0.1.aasx](AASX/TextilePrintingMachine_v0.0.1.aasx) | 1.7 MB | 아래 AAS 구성 참고 |
+| 🧩 AASX | [TextilePrintingMachine_v0.0.1.aasx](AASX/TextilePrintingMachine_v0.0.1.aasx) | 1.7 MB | [👁 열람 페이지](gen/TextilePrintingMachine_v0.0.1.md) |
 | 🎬 시뮬레이션 | [링크.md](%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98/%EB%A7%81%ED%81%AC.md) | 173 B | [👁 바로 보기](%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98/%EB%A7%81%ED%81%AC.md) |
 | 🔗 참고자료 | [참고링크.md](%EC%B0%B8%EA%B3%A0%EC%9E%90%EB%A3%8C/%EC%B0%B8%EA%B3%A0%EB%A7%81%ED%81%AC.md) | 3 KB | [👁 바로 보기](%EC%B0%B8%EA%B3%A0%EC%9E%90%EB%A3%8C/%EC%B0%B8%EA%B3%A0%EB%A7%81%ED%81%AC.md) |
 
 ## AAS 구성 — `TextilePrintingMachineAAS`
 
-`TextilePrintingMachine_v0.0.1.aasx` 에서 읽은 서브모델 8개:
+`TextilePrintingMachine_v0.0.1.aasx` 에서 읽은 서브모델 8개 · **[👁 요소 전체 펼쳐 보기](gen/TextilePrintingMachine_v0.0.1.md)**:
 
 | # | 서브모델 idShort |
 |:-:|---|
