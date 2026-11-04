@@ -1,8 +1,8 @@
-# 🧩 SMD_마운터.aasx
+# SMD_마운터.aasx
 
-[← 장비 페이지](../README.md) · [⤓ AASX 다운로드](../AASX/SMD_%EB%A7%88%EC%9A%B4%ED%84%B0.aasx) · 360 KB
+[장비 페이지](../README.md) · [AASX 다운로드](../AASX/SMD_%EB%A7%88%EC%9A%B4%ED%84%B0.aasx) · 360 KB
 
-> 🤖 AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.
+> AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.
 
 <img src="SMD_%EB%A7%88%EC%9A%B4%ED%84%B0_thumbnail.jpg" alt="썸네일" height="180" align="right">
 

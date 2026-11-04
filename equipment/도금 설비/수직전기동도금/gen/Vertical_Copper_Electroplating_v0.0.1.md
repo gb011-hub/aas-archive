@@ -1,8 +1,8 @@
-# 🧩 Vertical_Copper_Electroplating_v0.0.1.aasx
+# Vertical_Copper_Electroplating_v0.0.1.aasx
 
-[← 장비 페이지](../README.md) · [⤓ AASX 다운로드](../AASX/Vertical_Copper_Electroplating_v0.0.1.aasx) · 1.5 MB
+[장비 페이지](../README.md) · [AASX 다운로드](../AASX/Vertical_Copper_Electroplating_v0.0.1.aasx) · 1.5 MB
 
-> 🤖 AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.
+> AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.
 
 | 항목 | 내용 |
 |---|---|

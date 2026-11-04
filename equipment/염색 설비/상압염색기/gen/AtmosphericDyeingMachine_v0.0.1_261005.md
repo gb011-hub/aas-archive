@@ -1,8 +1,8 @@
-# 🧩 AtmosphericDyeingMachine_v0.0.1_261005.aasx
+# AtmosphericDyeingMachine_v0.0.1_261005.aasx
 
-[← 장비 페이지](../README.md) · [⤓ AASX 다운로드](../AASX/AtmosphericDyeingMachine_v0.0.1_261005.aasx) · 669 KB
+[장비 페이지](../README.md) · [AASX 다운로드](../AASX/AtmosphericDyeingMachine_v0.0.1_261005.aasx) · 669 KB
 
-> 🤖 AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.
+> AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.
 
 <img src="AtmosphericDyeingMachine_v0.0.1_261005_thumbnail.jpg" alt="썸네일" height="180" align="right">
 

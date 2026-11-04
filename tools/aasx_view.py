@@ -292,11 +292,11 @@ def _rows(elems, depth, out):
 
 
 def render(aasx_path, model, *, equipment_readme, aasx_link, thumb_name=None, size_text=""):
-    L = [f"# 🧩 {aasx_path.name}", "",
-         f"[← 장비 페이지]({equipment_readme}) · [⤓ AASX 다운로드]({aasx_link})" + (f" · {size_text}" if size_text else ""),
-         "", "> 🤖 AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.", ""]
+    L = [f"# {aasx_path.name}", "",
+         f"[장비 페이지]({equipment_readme}) · [AASX 다운로드]({aasx_link})" + (f" · {size_text}" if size_text else ""),
+         "", "> AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.", ""]
     if model.get("error"):
-        return "\n".join(L + [f"> ⚠️ {model['error']}", ""])
+        return "\n".join(L + [f"> 오류: {model['error']}", ""])
 
     sms = model["submodels"]
     total = sum(_count(sm["elements"]) for sm in sms)

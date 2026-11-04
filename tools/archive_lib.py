@@ -185,7 +185,7 @@ def scan():
                 groups.setdefault(a["sha1"], []).append(a["file"].name)
             dup = [n for n in groups.values() if len(n) > 1]
             for names in dup:
-                it["issues"].append("내용이 완전히 같은 AASX: " + ", ".join(f"`{n}`" for n in names) + " → 하나만 남기세요")
+                it["issues"].append("내용이 완전히 같은 AASX: " + ", ".join(f"`{n}`" for n in names) + ". 하나만 남기세요")
             if not dup:
                 it["issues"].append(f"AASX가 {len(it['aasx'])}개 — 최신본 하나만 남기거나 장비를 나누세요")
 

@@ -13,7 +13,7 @@ import urllib.request
 from urllib.parse import quote
 
 import aasx_view
-from archive_lib import DOC_PREFIX, ICON, REQUIRED, ROOT, SECTIONS, YOUTUBE_CHANNEL, scan, size
+from archive_lib import DOC_PREFIX, REQUIRED, ROOT, SECTIONS, YOUTUBE_CHANNEL, scan, size
 
 _titles = {}
 
@@ -79,7 +79,7 @@ def build_index(items):
         "",
         "장비별 개발계획서 · 가이던스 · AASX · 시뮬레이션을 모은 저장소입니다. 표의 링크를 누르면 바로 열립니다.",
         "",
-        "> 🤖 이 페이지는 **자동 생성**됩니다. 직접 고치지 말고, 장비 폴더에 파일을 올리기만 하세요. "
+        "> 이 페이지는 **자동 생성**됩니다. 직접 고치지 말고, 장비 폴더에 파일을 올리기만 하세요. "
         "회의용 **데모 저장소**이며, 파일은 [IODA-Lab/aas-portal-site](https://github.com/IODA-Lab/aas-portal-site)의 실제 파일입니다.",
         "",
         f"**{len(items)}종 중 {len(on)}종 등록** · 필수 문서(계획서 · 가이던스 · AASX) 완비 {full}종 · "
@@ -93,10 +93,11 @@ def build_index(items):
         g = it["group"] if it["group"] != prev else ""
         prev = it["group"]
         en = en_name(it)
-        name = f"[{it['name']}]({rel(it['dir'], ROOT)})" + (" ⚠" if it["issues"] else "") + (f"<br><sub>{en}</sub>" if en else "")
+        sub = " · ".join(x for x in (en, "확인 필요" if it["issues"] else "") if x)
+        name = f"[{it['name']}]({rel(it['dir'], ROOT)})" + (f"<br><sub>{sub}</sub>" if sub else "")
         L.append(f"| {g} | {name} | {index_aasx(it)} | {index_doc(it, '개발계획서')} | "
                  f"{index_doc(it, '가이던스')} | {index_sim(it)} |")
-    L += ["", "⚠ 확인 필요 · 빈칸은 아직 올라오지 않은 자료 · PDF 필요는 hwp만 있어 바로 볼 수 없는 문서", "", "---", ""]
+    L += ["", "빈칸은 아직 올라오지 않은 자료입니다. PDF 필요는 hwp만 있어 바로 볼 수 없는 문서입니다.", "", "---", ""]
 
     L += [f"<details><summary>확인 필요 {len(warn)}종</summary>", "", "| 장비 | 고칠 내용 |", "|---|---|"]
     for it in warn:
@@ -151,18 +152,18 @@ def view_cell(e, it):
     d = it["dir"]
     k = e["kind"]
     if e["view"]:
-        return f"[👁 바로 보기]({rel(e['view'], d)})"
+        return f"[보기]({rel(e['view'], d)})"
     if k == "viewable":
-        return f"[👁 바로 보기]({rel(e['file'], d)})"
+        return f"[보기]({rel(e['file'], d)})"
     if k == "video":
         return "다운로드 후 재생"
     if k == "convertible":
-        return "⏳ PDF 변환 대기"
+        return "PDF 변환 대기"
     if k == "no_preview":
-        return "❌ PDF를 함께 올려 주세요"
+        return "PDF를 함께 올려 주세요"
     if k == "aasx":
         v = it.get("views", {}).get(e["file"])
-        return f"[👁 열람 페이지]({rel(v, d)})" if v else "열람 페이지 생성 실패"
+        return f"[열람 페이지]({rel(v, d)})" if v else "열람 페이지 생성 실패"
     return "다운로드"
 
 
@@ -171,9 +172,9 @@ def build_equipment(it):
     L = [
         f"# {it['name']}",
         "",
-        f"[← 전체 목록]({'../' * 3}README.md) · 장비군: **{it['group']}**",
+        f"[전체 목록]({'../' * 3}README.md) · 장비군: **{it['group']}**",
         "",
-        "> 🤖 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.",
+        "> 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.",
         "",
     ]
     if it.get("thumb"):
@@ -189,14 +190,14 @@ def build_equipment(it):
         L += [f"- `{s}/`" for s in SECTIONS] + [""]
         return "\n".join(L)
 
-    L += ["## 산출물", "", "| 구분 | 파일 | 크기 | 바로 보기 |", "|---|---|---|---|"]
+    L += ["## 산출물", "", "| 구분 | 파일 | 크기 | 보기 |", "|---|---|---|---|"]
     for sec in SECTIONS:
         entries = it["entries"][sec]
         if not entries and sec in REQUIRED:
-            L.append(f"| {ICON[sec]} {sec} | _아직 없음_ | | |")
+            L.append(f"| {sec} | 아직 없음 | | |")
         for e in entries:
             f = e["file"]
-            L.append(f"| {ICON[sec]} {sec} | [{f.name}]({rel(f, d)}) | {size(f.stat().st_size)} | {view_cell(e, it)} |")
+            L.append(f"| {sec} | [{f.name}]({rel(f, d)}) | {size(f.stat().st_size)} | {view_cell(e, it)} |")
     L.append("")
 
     seen = set()
@@ -208,11 +209,11 @@ def build_equipment(it):
         view = it.get("views", {}).get(a["file"])
         L += [f"## AAS 구성 — `{a.get('idShort') or '?'}`", "",
               f"`{a['file'].name}` 에서 읽은 서브모델 {len(subs)}개"
-              + (f" · **[👁 요소 전체 펼쳐 보기]({rel(view, d)})**" if view else "") + ":", "",
+              + (f" · **[요소 전체 보기]({rel(view, d)})**" if view else "") + ":", "",
               "| # | 서브모델 idShort |", "|:-:|---|"]
         L += [f"| {n} | {s} |" for n, s in enumerate(subs, 1)] + [""]
     if it["youtube"]:
-        L += ["## ▶️ 시뮬레이션 영상", "", "썸네일을 누르면 YouTube에서 재생됩니다.", ""]
+        L += ["## 시뮬레이션 영상", "", "썸네일을 누르면 YouTube에서 재생됩니다.", ""]
         for vid, url in it["youtube"]:
             title = youtube_title(url) or "YouTube에서 보기"
             L += [f'<a href="{url}"><img src="https://img.youtube.com/vi/{vid}/hqdefault.jpg" '

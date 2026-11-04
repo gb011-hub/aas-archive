@@ -1,8 +1,8 @@
-# 🧩 HydraulicFormingPress_v0.0.3_261013.aasx
+# HydraulicFormingPress_v0.0.3_261013.aasx
 
-[← 장비 페이지](../README.md) · [⤓ AASX 다운로드](../AASX/HydraulicFormingPress_v0.0.3_261013.aasx) · 13.1 MB
+[장비 페이지](../README.md) · [AASX 다운로드](../AASX/HydraulicFormingPress_v0.0.3_261013.aasx) · 13.1 MB
 
-> 🤖 AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.
+> AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.
 
 <img src="HydraulicFormingPress_v0.0.3_261013_thumbnail.jpg" alt="썸네일" height="180" align="right">
 

@@ -1,8 +1,8 @@
-# 🧩 HydraulicInjector_v0.0.1_20261026.aasx
+# HydraulicInjector_v0.0.1_20261026.aasx
 
-[← 장비 페이지](../README.md) · [⤓ AASX 다운로드](../AASX/HydraulicInjector_v0.0.1_20261026.aasx) · 2.3 MB
+[장비 페이지](../README.md) · [AASX 다운로드](../AASX/HydraulicInjector_v0.0.1_20261026.aasx) · 2.3 MB
 
-> 🤖 AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.
+> AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.
 
 <img src="HydraulicInjector_v0.0.1_20261026_thumbnail.jpg" alt="썸네일" height="180" align="right">
 

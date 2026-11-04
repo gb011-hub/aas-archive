@@ -1,8 +1,8 @@
-# 🧩 BleachingMachine_ReferenceModel_v0.0.1.aasx
+# BleachingMachine_ReferenceModel_v0.0.1.aasx
 
-[← 장비 페이지](../README.md) · [⤓ AASX 다운로드](../AASX/BleachingMachine_ReferenceModel_v0.0.1.aasx) · 6.6 MB
+[장비 페이지](../README.md) · [AASX 다운로드](../AASX/BleachingMachine_ReferenceModel_v0.0.1.aasx) · 6.6 MB
 
-> 🤖 AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.
+> AASX 파일을 열어 자동으로 만든 열람 페이지입니다. 직접 고치지 말고 AASX를 다시 올리세요.
 
 <img src="BleachingMachine_ReferenceModel_v0.0.1_thumbnail.jpg" alt="썸네일" height="180" align="right">
 

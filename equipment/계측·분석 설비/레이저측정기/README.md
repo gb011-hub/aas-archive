@@ -1,8 +1,8 @@
 # 레이저측정기
 
-[← 전체 목록](../../../README.md) · 장비군: **계측·분석 설비**
+[전체 목록](../../../README.md) · 장비군: **계측·분석 설비**
 
-> 🤖 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
+> 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 
 <img src="gen/LaserMeasuringInstrument_AAS_V0.0.1_thumbnail.jpg" alt="레이저측정기" height="160" align="right">
 
@@ -15,15 +15,15 @@
 
 ## 산출물
 
-| 구분 | 파일 | 크기 | 바로 보기 |
+| 구분 | 파일 | 크기 | 보기 |
 |---|---|---|---|
-| 📄 개발계획서 | _아직 없음_ | | |
-| 📘 가이던스 | _아직 없음_ | | |
-| 🧩 AASX | [LaserMeasuringInstrument_AAS_V0.0.1.aasx](AASX/LaserMeasuringInstrument_AAS_V0.0.1.aasx) | 2.4 MB | [👁 열람 페이지](gen/LaserMeasuringInstrument_AAS_V0.0.1.md) |
+| 개발계획서 | 아직 없음 | | |
+| 가이던스 | 아직 없음 | | |
+| AASX | [LaserMeasuringInstrument_AAS_V0.0.1.aasx](AASX/LaserMeasuringInstrument_AAS_V0.0.1.aasx) | 2.4 MB | [열람 페이지](gen/LaserMeasuringInstrument_AAS_V0.0.1.md) |
 
 ## AAS 구성 — `LaserDisplacementSensorAAS`
 
-`LaserMeasuringInstrument_AAS_V0.0.1.aasx` 에서 읽은 서브모델 7개 · **[👁 요소 전체 펼쳐 보기](gen/LaserMeasuringInstrument_AAS_V0.0.1.md)**:
+`LaserMeasuringInstrument_AAS_V0.0.1.aasx` 에서 읽은 서브모델 7개 · **[요소 전체 보기](gen/LaserMeasuringInstrument_AAS_V0.0.1.md)**:
 
 | # | 서브모델 idShort |
 |:-:|---|
