@@ -34,7 +34,7 @@ jobs:
       - name: LibreOffice · 한글 글꼴 설치
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq --no-install-recommends libreoffice-writer fonts-noto-cjk
+          sudo apt-get install -y -qq --no-install-recommends libreoffice-writer fonts-noto-cjk fonts-nanum
 
       - name: 변환 시험
         run: |
@@ -48,19 +48,26 @@ jobs:
             start=$(date +%s)
             if python -c "import sys; from hwp5.hwp5html import main; sys.argv=['hwp5html']+sys.argv[1:]; main()" \
                  --output "/tmp/html_$name" "$f" >> "$log" 2>&1; then
-              # 인쇄용 스타일: A4, 위아래 여백은 인쇄 여백으로, 좌우 여백 12mm, 90%로 축소 (본문보다 넓은 표의 오른쪽 잘림 방지)
+              # 인쇄용: A4(좌우 여백 10mm), 글꼴은 나눔고딕 하나로 통일(한글·영문 기준선 차이로 흔들려 보이는 문제),
+              # 표·그림 중 가장 넓은 것을 재서 페이지 폭(190mm = 718px)에 딱 맞게 축소 (오른쪽 잘림 방지)
               python - "/tmp/html_$name/index.xhtml" <<'PY'
           import sys
           p = sys.argv[1]
           s = open(p, encoding="utf-8").read()
-          css = ("<style type=\"text/css\">@page{size:A4;margin:15mm 0}"
+          css = ("<style type=\"text/css\">@page{size:A4;margin:12mm 10mm}"
                  "html,body{margin:0!important;padding:0!important;background:#fff!important}"
-                 ".Paper{margin:0 auto!important;padding:0 12mm!important;width:auto!important;"
-                 "box-shadow:none!important;border:0!important;zoom:0.9}</style>")
-          s = s.replace("</head>", css + "</head>", 1)
+                 ".Paper{margin:0!important;padding:0!important;width:auto!important;"
+                 "box-shadow:none!important;border:0!important}"
+                 "*{font-family:'NanumGothic','Noto Sans CJK KR',sans-serif!important}</style>")
+          js = ("<script type=\"text/javascript\">//<![CDATA[\n"
+                "(function(){var avail=718,maxR=0,els=document.querySelectorAll('table,img,svg');"
+                "for(var i=0;i<els.length;i++){var r=els[i].getBoundingClientRect();if(r.right>maxR)maxR=r.right;}"
+                "var z=maxR>avail?avail/maxR:1;document.body.style.zoom=z;document.title='fit '+z.toFixed(3);})();"
+                "\n//]]></script>")
+          s = s.replace("</head>", css + "</head>", 1).replace("</body>", js + "</body>", 1)
           open(p, "w", encoding="utf-8").write(s)
           PY
-              google-chrome --headless=new --no-sandbox --disable-gpu \
+              google-chrome --headless=new --no-sandbox --disable-gpu --window-size=718,1000 \
                 --print-to-pdf="hwp-test-output/${name}_A4.pdf" --no-pdf-header-footer \
                 "file:///tmp/html_$name/index.xhtml" >> "$log" 2>&1 \
                 && echo "변환 성공 ($(( $(date +%s) - start ))초)" | tee -a "$log" \
