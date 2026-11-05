@@ -3,7 +3,7 @@
 
   - docx · pptx · xlsx : LibreOffice로 변환
   - hwp               : pyhwp(hwp5html)로 HTML을 만든 뒤 Chrome으로 A4 PDF 인쇄
-                        (본문보다 넓은 표가 잘리지 않게 좌우 여백 12mm, 90% 축소)
+                        (나눔고딕으로 통일, 넘치는 표는 페이지 폭으로 다시 배치 — tools/hwp_fit.js)
   - hwpx              : 변환 도구가 없어 변환하지 않음 (PDF를 함께 올려야 함)
 
 자동 변환한 PDF는 tools/state/converted.json에 "어느 원본의 어떤 내용(해시)으로 만들었는지" 기록한다.
@@ -27,12 +27,18 @@ EQUIP = ROOT / "equipment"
 STATE = ROOT / "tools" / "state" / "converted.json"
 SOURCES = {".docx", ".doc", ".pptx", ".xlsx", ".hwp"}
 
-# hwp5html 결과에 넣는 인쇄용 스타일 (GitHub Actions 시험에서 확인한 값)
-HWP_PRINT_CSS = ("<style type=\"text/css\">@page{size:A4;margin:15mm 0}"
-                 "html,body{margin:0!important;padding:0!important;background:#fff!important}"
-                 ".Paper{margin:0 auto!important;padding:0 12mm!important;width:auto!important;"
-                 "box-shadow:none!important;border:0!important;zoom:0.9}</style>")
+# hwp 변환 방식이 바뀌면 이 번호를 올린다 → 이미 변환된 hwp PDF도 새 방식으로 다시 만든다.
+HWP_CONVERTER_VERSION = 2
 
+# hwp5html 결과에 넣는 인쇄용 스타일: A4(좌우 여백 10mm), 글꼴은 나눔고딕 하나로 통일
+# (한글·영문 글꼴이 섞이면 기준선이 달라 흔들려 보임), 그림은 페이지 폭에 맞춤
+HWP_PRINT_CSS = ("<style type=\"text/css\">@page{size:A4;margin:12mm 10mm}"
+                 "html,body{margin:0!important;padding:0!important;background:#fff!important}"
+                 ".Paper{margin:0!important;padding:0!important;width:auto!important;"
+                 "box-shadow:none!important;border:0!important}"
+                 "img{max-width:100%!important;height:auto!important}"
+                 "*{font-family:'NanumGothic','Noto Sans CJK KR',sans-serif!important}</style>")
+HWP_FIT_JS = Path(__file__).with_name("hwp_fit.js")
 
 
 def sha1(path):
@@ -64,7 +70,8 @@ def plan(state):
         rec = state.get(rel(pdf))
         if pdf.exists() and rec is None:
             continue                        # 사람이 올린 PDF가 있음
-        if not pdf.exists() or rec["source"] != rel(src) or rec["sha1"] != sha1(src):
+        outdated = src.suffix.lower() == ".hwp" and rec.get("converter", 1) != HWP_CONVERTER_VERSION
+        if not pdf.exists() or rec["source"] != rel(src) or rec["sha1"] != sha1(src) or outdated:
             todo.append(src)
     orphans = [p for p, rec in state.items() if not (ROOT / rec["source"]).exists()]
     return todo, orphans
@@ -90,12 +97,17 @@ def convert_hwp(src):
         if r.returncode != 0 or not index.exists():
             print("  hwp5html 실패:", (r.stderr or r.stdout).strip().splitlines()[-1:] or "")
             return False
-        index.write_text(index.read_text(encoding="utf-8").replace("</head>", HWP_PRINT_CSS + "</head>", 1),
-                         encoding="utf-8")
+        js = ('<script type="text/javascript">//<![CDATA[\n' + HWP_FIT_JS.read_text(encoding="utf-8")
+              + "\n//]]></script>")
+        page = index.read_text(encoding="utf-8")
+        page = page.replace("</head>", HWP_PRINT_CSS + "</head>", 1).replace("</body>", js + "</body>", 1)
+        index.write_text(page, encoding="utf-8")
         chrome = shutil.which("google-chrome") or shutil.which("chromium") or "google-chrome"
         out = Path(tmp) / "out.pdf"
+        # 창 폭을 A4 본문 폭(718px)으로 맞춰야 hwp_fit.js가 잰 폭과 인쇄 폭이 같아진다
         r = subprocess.run([chrome, "--headless=new", "--no-sandbox", "--disable-gpu", "--no-pdf-header-footer",
-                            f"--print-to-pdf={out}", index.as_uri()], capture_output=True, text=True)
+                            "--window-size=718,1000", f"--print-to-pdf={out}", index.as_uri()],
+                           capture_output=True, text=True)
         if not out.exists():
             return False
         shutil.move(str(out), src.with_suffix(".pdf"))
@@ -118,6 +130,8 @@ def main():
         pdf = src.with_suffix(".pdf")
         if ok and pdf.exists():
             state[rel(pdf)] = {"source": rel(src), "sha1": sha1(src)}
+            if src.suffix.lower() == ".hwp":
+                state[rel(pdf)]["converter"] = HWP_CONVERTER_VERSION
         else:
             print(f"  ⚠️ 변환 실패: {rel(src)}")
     if todo or orphans or created:
