@@ -1,0 +1,82 @@
+# 시험용 (hwp-test 브랜치 전용): hwp를 PDF로 자동 변환할 수 있는지 두 가지 경로로 확인한다.
+#   경로 1: pyhwp hwp5html → HTML → Chrome으로 PDF
+#   경로 2: pyhwp hwp5odt  → ODT  → LibreOffice로 PDF
+# 결과는 hwp-test-output/ 에 커밋한다. main 브랜치와 데이터베이스에는 영향이 없다.
+name: hwp 변환 시험
+
+on:
+  push:
+    branches: [hwp-test]
+    paths:
+      - "hwp-test-input/**"
+      - ".github/workflows/hwp-test.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: pyhwp 준비 (패키지 빌드 단계가 오래되어 소스에서 직접 사용)
+        run: |
+          python -m pip install --quiet "cryptography" "lxml" "olefile>=0.43"
+          python -m pip download --quiet --no-deps --no-binary :all: -d /tmp/pkgs pyhwp==0.1b15
+          tar -xzf /tmp/pkgs/pyhwp-0.1b15.tar.gz -C /tmp
+          echo "PYTHONPATH=/tmp/pyhwp-0.1b15/src" >> "$GITHUB_ENV"
+
+      - name: LibreOffice · 한글 글꼴 설치
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends libreoffice-writer fonts-noto-cjk
+
+      - name: 변환 시험
+        run: |
+          mkdir -p hwp-test-output
+          log=hwp-test-output/log.txt
+          : > "$log"
+          for f in hwp-test-input/*.hwp; do
+            name=$(basename "$f" .hwp)
+            echo "=== $name ($(du -h "$f" | cut -f1))" | tee -a "$log"
+
+            start=$(date +%s)
+            if python -c "import sys; from hwp5.hwp5html import main; sys.argv=['hwp5html']+sys.argv[1:]; main()" \
+                 --output "/tmp/html_$name" "$f" >> "$log" 2>&1; then
+              google-chrome --headless=new --no-sandbox --disable-gpu \
+                --print-to-pdf="hwp-test-output/${name}_경로1_html.pdf" --no-pdf-header-footer \
+                "file:///tmp/html_$name/index.xhtml" >> "$log" 2>&1 \
+                && echo "경로1 성공 ($(( $(date +%s) - start ))초)" | tee -a "$log" \
+                || echo "경로1 Chrome PDF 실패" | tee -a "$log"
+            else
+              echo "경로1 hwp5html 실패" | tee -a "$log"
+            fi
+
+            start=$(date +%s)
+            if python -c "import sys; from hwp5.hwp5odt import main; sys.argv=['hwp5odt']+sys.argv[1:]; main()" \
+                 --output "/tmp/$name.odt" "$f" >> "$log" 2>&1; then
+              soffice --headless --convert-to pdf --outdir /tmp/odtpdf "/tmp/$name.odt" >> "$log" 2>&1 \
+                && cp "/tmp/odtpdf/$name.pdf" "hwp-test-output/${name}_경로2_odt.pdf" \
+                && echo "경로2 성공 ($(( $(date +%s) - start ))초)" | tee -a "$log" \
+                || echo "경로2 LibreOffice PDF 실패" | tee -a "$log"
+            else
+              echo "경로2 hwp5odt 실패" | tee -a "$log"
+            fi
+          done
+          ls -la hwp-test-output | tee -a "$log"
+
+      - name: 결과 커밋 (hwp-test 브랜치)
+        if: always()
+        run: |
+          git add -A hwp-test-output
+          git diff --cached --quiet && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "hwp 변환 시험 결과"
+          git push
