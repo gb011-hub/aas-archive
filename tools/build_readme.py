@@ -224,8 +224,8 @@ def build_equipment(it):
     if it.get("history"):
         # 맨 아래 접어 두는 변경 기록 (올림 · 수정 · 삭제). 자동 생성 커밋은 빼고 사람이 한 변경만.
         L += ["<details>", f"<summary>변경 기록 (최근 {len(it['history'])}건)</summary>", "",
-              "| 날짜 | 올린 사람 | 내용 |", "|---|---|---|"]
-        L += [f"| {d_} | {who} | {msg.replace('|', '/')} |" for d_, who, msg in it["history"]]
+              "| 날짜 | 변경 | 파일 |", "|---|---|---|"]
+        L += [f"| {d_} | {act} | {name.replace('|', '/')} |" for d_, act, name in it["history"]]
         L += ["", "</details>", ""]
     return "\n".join(L)
 

@@ -77,17 +77,47 @@ def git_time(path):
         return 0
 
 
-def history(folder, limit=5):
-    """장비 폴더에서 사람이 한 최근 변경(올림 · 수정 · 삭제)을 [(날짜, 사람, 내용)]으로. 봇 커밋은 뺀다."""
+def history(folder, limit=8):
+    """장비 폴더의 최근 파일 변경을 [(날짜, 변경, 파일 이름)]으로 돌려준다.
+    사람 이름과 커밋 메시지는 쓰지 않고, git 기록의 파일 변경 내역(추가 · 수정 · 삭제 · 이름 변경)만 쓴다.
+    자동 생성물(README · gen/ · .gitkeep · 자동 변환 PDF)의 변경과 봇 커밋은 뺀다."""
+    r = folder.relative_to(ROOT).as_posix()
+    paths = [r, f":(exclude){r}/README.md", f":(exclude){r}/gen", f":(exclude){r}/*/.gitkeep"]
     try:
-        r = folder.relative_to(ROOT).as_posix()
-        paths = [r, f":(exclude){r}/README.md", f":(exclude){r}/gen", f":(exclude){r}/*/.gitkeep"]
-        out = subprocess.run(["git", "log", "-n", "50", "--format=%ad%x1f%an%x1f%s", "--date=short", "--", *paths],
+        out = subprocess.run(["git", "-c", "core.quotepath=off", "log", "-n", "50", "-M", "--name-status",
+                              "--format=@@%ad%x1f%an", "--date=short", "--", *paths],
                              cwd=ROOT, capture_output=True, text=True, check=True).stdout
     except (subprocess.CalledProcessError, FileNotFoundError):
         return []
-    rows = [line.split("\x1f") for line in out.splitlines() if line.count("\x1f") == 2]
-    return [r for r in rows if r[1] != BOT][:limit]
+    auto = {p.relative_to(ROOT).as_posix() for p in auto_pdfs()}
+    action = {"A": "추가", "M": "수정", "D": "삭제", "R": "이름 변경"}
+    commits, cur = [], None
+    for line in out.splitlines():
+        if line.startswith("@@"):
+            date, who = line[2:].split("\x1f", 1)
+            cur = {"date": date, "bot": who == BOT, "files": []}
+            commits.append(cur)
+        elif cur is not None and "\t" in line:
+            cur["files"].append(line.split("\t"))
+    rows = []
+    for c in commits:
+        if c["bot"]:
+            continue
+        # 같은 커밋에 같은 이름의 docx 등이 있으면 그 PDF는 변환본이므로 뺀다
+        stems = {f[-1].rsplit(".", 1)[0] for f in c["files"] if f[-1].lower().endswith(tuple(CONVERTIBLE))}
+        for parts in c["files"]:
+            code, path = parts[0][:1], parts[-1]
+            if code not in action or path in auto:
+                continue
+            if path.lower().endswith(".pdf") and path.rsplit(".", 1)[0] in stems:
+                continue
+            name = path.rsplit("/", 1)[-1]
+            if code == "R":
+                name = f"{parts[1].rsplit('/', 1)[-1]} → {name}"
+            rows.append((c["date"], action[code], name))
+            if len(rows) >= limit:
+                return rows
+    return rows
 
 
 def auto_pdfs():
