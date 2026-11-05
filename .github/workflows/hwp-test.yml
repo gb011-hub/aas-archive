@@ -41,6 +41,41 @@ jobs:
           mkdir -p hwp-test-output && rm -f hwp-test-output/*.pdf
           log=hwp-test-output/log.txt
           : > "$log"
+          cat > /tmp/fit.js <<'JS'
+          (function () {
+            var avail = 718, log = [];
+            function widest() {
+              var best = null, maxR = 0, els = document.querySelectorAll('table,img,svg,div,p');
+              for (var i = 0; i < els.length; i++) {
+                var r = els[i].getBoundingClientRect();
+                if (r.right > maxR) { maxR = r.right; best = els[i]; }
+              }
+              return [best, maxR];
+            }
+            var w0 = widest();
+            log.push('widest ' + (w0[0] ? w0[0].tagName + '.' + (w0[0].className || '') : '-') + ' ' + Math.round(w0[1]));
+            // 1) 넘치는 표는 페이지 폭으로 다시 배치
+            var tables = document.querySelectorAll('table'), fixed = 0, zoomed = 0, minz = 1;
+            for (var i = 0; i < tables.length; i++) {
+              var t = tables[i];
+              if (t.getBoundingClientRect().right <= avail) continue;
+              t.style.width = '100%'; t.style.maxWidth = '100%'; t.style.tableLayout = 'auto';
+              var cells = t.querySelectorAll('td,th,col');
+              for (var j = 0; j < cells.length; j++) { cells[j].style.width = 'auto'; cells[j].style.wordBreak = 'break-all'; }
+              fixed++;
+            }
+            // 2) 그래도 넘치는 표만 따로 축소 (최소 60%)
+            for (var i = 0; i < tables.length; i++) {
+              var t = tables[i], r = t.getBoundingClientRect();
+              if (r.right <= avail || t.parentElement.closest('table')) continue;
+              var z = Math.max(0.6, (avail - r.left) / r.width);
+              t.style.zoom = z; zoomed++; if (z < minz) minz = z;
+            }
+            var w1 = widest();
+            log.push('reflow ' + fixed + ' zoom ' + zoomed + ' min ' + minz.toFixed(2) + ' final ' + Math.round(w1[1]));
+            document.title = log.join(' | ');
+          })();
+          JS
           for f in hwp-test-input/*.hwp; do
             name=$(basename "$f" .hwp)
             echo "=== $name ($(du -h "$f" | cut -f1))" | tee -a "$log"
@@ -49,7 +84,7 @@ jobs:
             if python -c "import sys; from hwp5.hwp5html import main; sys.argv=['hwp5html']+sys.argv[1:]; main()" \
                  --output "/tmp/html_$name" "$f" >> "$log" 2>&1; then
               # 인쇄용: A4(좌우 여백 10mm), 글꼴은 나눔고딕 하나로 통일(한글·영문 기준선 차이로 흔들려 보이는 문제),
-              # 표·그림 중 가장 넓은 것을 재서 페이지 폭(190mm = 718px)에 딱 맞게 축소 (오른쪽 잘림 방지)
+              # 넘치는 그림은 페이지 폭에 맞추고, 넘치는 표는 페이지 폭으로 다시 배치, 그래도 넘치면 그 표만 축소(최소 60%)
               python - "/tmp/html_$name/index.xhtml" <<'PY'
           import sys
           p = sys.argv[1]
@@ -58,12 +93,9 @@ jobs:
                  "html,body{margin:0!important;padding:0!important;background:#fff!important}"
                  ".Paper{margin:0!important;padding:0!important;width:auto!important;"
                  "box-shadow:none!important;border:0!important}"
+                 "img{max-width:100%!important;height:auto!important}"
                  "*{font-family:'NanumGothic','Noto Sans CJK KR',sans-serif!important}</style>")
-          js = ("<script type=\"text/javascript\">//<![CDATA[\n"
-                "(function(){var avail=718,maxR=0,els=document.querySelectorAll('table,img,svg');"
-                "for(var i=0;i<els.length;i++){var r=els[i].getBoundingClientRect();if(r.right>maxR)maxR=r.right;}"
-                "var z=maxR>avail?avail/maxR:1;document.body.style.zoom=z;document.title='fit '+z.toFixed(3);})();"
-                "\n//]]></script>")
+          js = ("<script type=\"text/javascript\">//<![CDATA[\n" + open("/tmp/fit.js", encoding="utf-8").read() + "\n//]]></script>")
           s = s.replace("</head>", css + "</head>", 1).replace("</body>", js + "</body>", 1)
           open(p, "w", encoding="utf-8").write(s)
           PY
