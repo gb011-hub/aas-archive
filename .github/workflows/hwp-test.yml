@@ -48,15 +48,15 @@ jobs:
             start=$(date +%s)
             if python -c "import sys; from hwp5.hwp5html import main; sys.argv=['hwp5html']+sys.argv[1:]; main()" \
                  --output "/tmp/html_$name" "$f" >> "$log" 2>&1; then
-              # 인쇄용 스타일: A4, 위아래 여백은 인쇄 여백으로, 화면용 종이 바깥 여백 제거 (오른쪽 잘림 방지)
+              # 인쇄용 스타일: A4, 위아래 여백은 인쇄 여백으로, 좌우 여백 12mm, 90%로 축소 (본문보다 넓은 표의 오른쪽 잘림 방지)
               python - "/tmp/html_$name/index.xhtml" <<'PY'
           import sys
           p = sys.argv[1]
           s = open(p, encoding="utf-8").read()
           css = ("<style type=\"text/css\">@page{size:A4;margin:15mm 0}"
                  "html,body{margin:0!important;padding:0!important;background:#fff!important}"
-                 ".Paper{margin:0 auto!important;padding-top:0!important;padding-bottom:0!important;"
-                 "box-shadow:none!important;border:0!important}</style>")
+                 ".Paper{margin:0 auto!important;padding:0 12mm!important;width:auto!important;"
+                 "box-shadow:none!important;border:0!important;zoom:0.9}</style>")
           s = s.replace("</head>", css + "</head>", 1)
           open(p, "w", encoding="utf-8").write(s)
           PY
