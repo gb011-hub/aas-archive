@@ -1,5 +1,5 @@
 # equipment/ 아래에서 파일을 올리거나 · 고치거나 · 지우면
-#   1) docx·pptx·xlsx를 PDF로 변환한다 (새 파일·내용이 바뀐 파일만). 원본이 지워진 자동 변환 PDF는 함께 지운다.
+#   1) docx·pptx·xlsx·hwp를 PDF로 변환한다 (새 파일·내용이 바뀐 파일만). 원본이 지워진 자동 변환 PDF는 함께 지운다.
 #   2) 비어 버린 하위 폴더(개발계획서·가이던스·AASX·시뮬레이션·참고자료)를 다시 만든다.
 #   3) AASX 열람 페이지(장비 폴더의 gen/)와 README(전체 현황표 + 장비별 페이지)를 다시 만들어 커밋한다.
 # 사람은 파일만 올리면 된다.
@@ -26,11 +26,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0   # 올린 사람·수정일을 git 기록에서 읽으므로 전체 이력 필요
+          fetch-depth: 0   # 변경 기록을 git 기록에서 읽으므로 전체 이력 필요
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"   # hwp 변환(pyhwp)을 시험한 버전
 
       - name: 변환할 문서가 있는지 확인 (새로 올라왔거나 내용이 바뀐 문서)
         id: need
         run: echo "count=$(python3 tools/convert_docs.py --plan)" >> "$GITHUB_OUTPUT"
+
+      - name: hwp 변환 도구(pyhwp) 준비
+        if: steps.need.outputs.count != '0'
+        run: |
+          python3 -m pip install --quiet "cryptography" "lxml" "olefile>=0.43" "six"
+          python3 -m pip download --quiet --no-deps --no-binary :all: -d /tmp/pkgs pyhwp==0.1b15
+          tar -xzf /tmp/pkgs/pyhwp-0.1b15.tar.gz -C /tmp   # 패키지 빌드 단계가 오래되어 소스에서 직접 사용
+          echo "PYTHONPATH=/tmp/pyhwp-0.1b15/src" >> "$GITHUB_ENV"
 
       - name: LibreOffice · 한글 글꼴 설치
         if: steps.need.outputs.count != '0'

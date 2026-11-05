@@ -23,8 +23,8 @@ VERSION = re.compile(r"_v(\d+\.\d+\.\d+)", re.I)
 IGNORE = {".gitkeep", ".DS_Store", "README.md", "index.html"}
 
 VIEWABLE = {".pdf", ".md", ".txt", ".png", ".jpg", ".jpeg", ".gif", ".svg"}  # GitHub 화면에서 바로 보이는 형식
-CONVERTIBLE = {".docx", ".doc", ".pptx", ".xlsx"}                   # LibreOffice로 PDF 자동 변환
-NO_PREVIEW_DOC = {".hwp", ".hwpx"}                                    # 자동 변환 불가 → PDF를 함께 올려야 함
+CONVERTIBLE = {".docx", ".doc", ".pptx", ".xlsx", ".hwp"}           # PDF 자동 변환 (tools/convert_docs.py)
+NO_PREVIEW_DOC = {".hwpx"}                                           # 자동 변환 불가 → PDF를 함께 올려야 함
 VIDEO = {".mp4", ".webm", ".mov"}
 LINK_TEXT = {".md", ".txt"}                                           # YouTube 주소를 적는 파일
 

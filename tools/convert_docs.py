@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""docx · pptx · xlsx를 바로 보기용 PDF로 변환하고, 원본이 바뀌거나 지워지면 PDF도 따라가게 한다.
+"""docx · pptx · xlsx · hwp를 바로 보기용 PDF로 변환하고, 원본이 바뀌거나 지워지면 PDF도 따라가게 한다.
+
+  - docx · pptx · xlsx : LibreOffice로 변환
+  - hwp               : pyhwp(hwp5html)로 HTML을 만든 뒤 Chrome으로 A4 PDF 인쇄
+                        (본문보다 넓은 표가 잘리지 않게 좌우 여백 12mm, 90% 축소)
+  - hwpx              : 변환 도구가 없어 변환하지 않음 (PDF를 함께 올려야 함)
 
 자동 변환한 PDF는 tools/state/converted.json에 "어느 원본의 어떤 내용(해시)으로 만들었는지" 기록한다.
   - 원본이 새로 올라옴          → PDF 생성
@@ -20,7 +25,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 EQUIP = ROOT / "equipment"
 STATE = ROOT / "tools" / "state" / "converted.json"
-SOURCES = {".docx", ".doc", ".pptx", ".xlsx"}
+SOURCES = {".docx", ".doc", ".pptx", ".xlsx", ".hwp"}
+
+# hwp5html 결과에 넣는 인쇄용 스타일 (GitHub Actions 시험에서 확인한 값)
+HWP_PRINT_CSS = ("<style type=\"text/css\">@page{size:A4;margin:15mm 0}"
+                 "html,body{margin:0!important;padding:0!important;background:#fff!important}"
+                 ".Paper{margin:0 auto!important;padding:0 12mm!important;width:auto!important;"
+                 "box-shadow:none!important;border:0!important;zoom:0.9}</style>")
+
 
 
 def sha1(path):
@@ -58,6 +70,38 @@ def plan(state):
     return todo, orphans
 
 
+def convert_office(src):
+    r = subprocess.run(["soffice", "--headless", "--convert-to", "pdf", "--outdir", str(src.parent), str(src)],
+                       capture_output=True, text=True)
+    return r.returncode == 0
+
+
+def convert_hwp(src):
+    """hwp → (pyhwp) HTML → (Chrome) A4 PDF. pyhwp는 워크플로가 PYTHONPATH로 준비한다."""
+    import shutil
+    import sys as _sys
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        html = Path(tmp) / "html"
+        r = subprocess.run([_sys.executable, "-c",
+                            "import sys; from hwp5.hwp5html import main; sys.argv=['hwp5html']+sys.argv[1:]; main()",
+                            "--output", str(html), str(src)], capture_output=True, text=True)
+        index = html / "index.xhtml"
+        if r.returncode != 0 or not index.exists():
+            print("  hwp5html 실패:", (r.stderr or r.stdout).strip().splitlines()[-1:] or "")
+            return False
+        index.write_text(index.read_text(encoding="utf-8").replace("</head>", HWP_PRINT_CSS + "</head>", 1),
+                         encoding="utf-8")
+        chrome = shutil.which("google-chrome") or shutil.which("chromium") or "google-chrome"
+        out = Path(tmp) / "out.pdf"
+        r = subprocess.run([chrome, "--headless=new", "--no-sandbox", "--disable-gpu", "--no-pdf-header-footer",
+                            f"--print-to-pdf={out}", index.as_uri()], capture_output=True, text=True)
+        if not out.exists():
+            return False
+        shutil.move(str(out), src.with_suffix(".pdf"))
+        return True
+
+
 def main():
     state, created = load_state()
     todo, orphans = plan(state)
@@ -70,10 +114,9 @@ def main():
         print(f"원본이 없어 PDF 삭제: {p}")
     for src in todo:
         print(f"PDF 변환: {rel(src)}")
-        r = subprocess.run(["soffice", "--headless", "--convert-to", "pdf", "--outdir", str(src.parent), str(src)],
-                           capture_output=True, text=True)
+        ok = convert_hwp(src) if src.suffix.lower() == ".hwp" else convert_office(src)
         pdf = src.with_suffix(".pdf")
-        if r.returncode == 0 and pdf.exists():
+        if ok and pdf.exists():
             state[rel(pdf)] = {"source": rel(src), "sha1": sha1(src)}
         else:
             print(f"  ⚠️ 변환 실패: {rel(src)}")
