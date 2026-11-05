@@ -27,7 +27,7 @@ jobs:
 
       - name: pyhwp 준비 (패키지 빌드 단계가 오래되어 소스에서 직접 사용)
         run: |
-          python -m pip install --quiet "cryptography" "lxml" "olefile>=0.43"
+          python -m pip install --quiet "cryptography" "lxml" "olefile>=0.43" "six"
           python -m pip download --quiet --no-deps --no-binary :all: -d /tmp/pkgs pyhwp==0.1b15
           tar -xzf /tmp/pkgs/pyhwp-0.1b15.tar.gz -C /tmp
           echo "PYTHONPATH=/tmp/pyhwp-0.1b15/src" >> "$GITHUB_ENV"
