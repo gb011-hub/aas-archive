@@ -221,6 +221,12 @@ def build_equipment(it):
     if it["uml"]:
         L += ["## 서브모델 설계 (UML)", ""]
         L += [f"- [{f.name}]({rel(f, d)})" for f in it["uml"]] + [""]
+    if it.get("history"):
+        # 맨 아래 접어 두는 변경 기록 (올림 · 수정 · 삭제). 자동 생성 커밋은 빼고 사람이 한 변경만.
+        L += ["<details>", f"<summary>변경 기록 (최근 {len(it['history'])}건)</summary>", "",
+              "| 날짜 | 올린 사람 | 내용 |", "|---|---|---|"]
+        L += [f"| {d_} | {who} | {msg.replace('|', '/')} |" for d_, who, msg in it["history"]]
+        L += ["", "</details>", ""]
     return "\n".join(L)
 
 
@@ -248,7 +254,22 @@ def build_views(it):
         it["views"][f] = page
 
 
+def ensure_folders():
+    """모든 장비 폴더에 하위 폴더 5개가 보이게 한다. 파일을 다 지워 빈 폴더가 되면 .gitkeep을 다시 넣는다."""
+    from archive_lib import EQUIP
+    for d in (p for p in EQUIP.glob("*/*") if p.is_dir()):
+        for sec in SECTIONS:
+            sub = d / sec
+            sub.mkdir(exist_ok=True)
+            real = [f for f in sub.iterdir() if f.name != ".gitkeep"]
+            keep = sub / ".gitkeep"
+            if not real and not keep.exists():
+                keep.touch()
+
+
 def main():
+    if "--check" not in sys.argv:
+        ensure_folders()
     items = scan()
     if "--check" in sys.argv:
         for it in items:

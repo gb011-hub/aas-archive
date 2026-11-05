@@ -1,6 +1,7 @@
-# equipment/ 아래에 파일이 올라오면
-#   1) docx·pptx·xlsx를 PDF로 변환하고 (브라우저에서 바로 보기용)
-#   2) AASX 열람 페이지(장비 폴더의 gen/)와 README(전체 현황표 + 장비별 페이지)를 다시 만들어 커밋한다.
+# equipment/ 아래에서 파일을 올리거나 · 고치거나 · 지우면
+#   1) docx·pptx·xlsx를 PDF로 변환한다 (새 파일·내용이 바뀐 파일만). 원본이 지워진 자동 변환 PDF는 함께 지운다.
+#   2) 비어 버린 하위 폴더(개발계획서·가이던스·AASX·시뮬레이션·참고자료)를 다시 만든다.
+#   3) AASX 열람 페이지(장비 폴더의 gen/)와 README(전체 현황표 + 장비별 페이지)를 다시 만들어 커밋한다.
 # 사람은 파일만 올리면 된다.
 name: 아카이브 자동 갱신
 
@@ -27,13 +28,9 @@ jobs:
         with:
           fetch-depth: 0   # 올린 사람·수정일을 git 기록에서 읽으므로 전체 이력 필요
 
-      - name: 변환할 문서가 있는지 확인
+      - name: 변환할 문서가 있는지 확인 (새로 올라왔거나 내용이 바뀐 문서)
         id: need
-        run: |
-          n=0
-          while IFS= read -r -d '' f; do [ -e "${f%.*}.pdf" ] || n=$((n+1)); done \
-            < <(find equipment -type f \( -iname '*.docx' -o -iname '*.doc' -o -iname '*.pptx' -o -iname '*.xlsx' \) -print0)
-          echo "count=$n" >> "$GITHUB_OUTPUT"
+        run: echo "count=$(python3 tools/convert_docs.py --plan)" >> "$GITHUB_OUTPUT"
 
       - name: LibreOffice · 한글 글꼴 설치
         if: steps.need.outputs.count != '0'
@@ -41,9 +38,8 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq --no-install-recommends libreoffice-writer libreoffice-calc libreoffice-impress fonts-noto-cjk
 
-      - name: 문서 → PDF 변환
-        if: steps.need.outputs.count != '0'
-        run: bash tools/convert_docs.sh
+      - name: 문서 → PDF 변환 · 원본이 지워진 PDF 정리
+        run: python3 tools/convert_docs.py
 
       - name: 썸네일 축소용 Pillow 설치
         run: python3 -m pip install --quiet pillow
@@ -56,7 +52,7 @@ jobs:
 
       - name: 결과 커밋
         run: |
-          git add -A -- README.md equipment   # 자동 생성물(README · 변환 PDF · gen/)만 바뀌므로 폴더째 추가
+          git add -A -- README.md equipment tools/state   # 자동 생성물(README · 변환 PDF · gen/ · .gitkeep · 변환 기록)
           git diff --cached --quiet && exit 0
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

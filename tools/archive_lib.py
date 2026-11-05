@@ -63,6 +63,41 @@ def youtube_links(files):
     return found
 
 
+BOT = "github-actions[bot]"
+CONVERTED = ROOT / "tools" / "state" / "converted.json"
+
+
+def git_time(path):
+    """파일을 마지막으로 커밋한 시각(유닉스 초). 기록이 없으면 0."""
+    try:
+        out = subprocess.run(["git", "log", "-1", "--format=%ct", "--", str(path)],
+                             cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
+        return int(out) if out else 0
+    except (subprocess.CalledProcessError, FileNotFoundError, ValueError):
+        return 0
+
+
+def history(folder, limit=5):
+    """장비 폴더에서 사람이 한 최근 변경(올림 · 수정 · 삭제)을 [(날짜, 사람, 내용)]으로. 봇 커밋은 뺀다."""
+    try:
+        r = folder.relative_to(ROOT).as_posix()
+        paths = [r, f":(exclude){r}/README.md", f":(exclude){r}/gen", f":(exclude){r}/*/.gitkeep"]
+        out = subprocess.run(["git", "log", "-n", "50", "--format=%ad%x1f%an%x1f%s", "--date=short", "--", *paths],
+                             cwd=ROOT, capture_output=True, text=True, check=True).stdout
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return []
+    rows = [line.split("\x1f") for line in out.splitlines() if line.count("\x1f") == 2]
+    return [r for r in rows if r[1] != BOT][:limit]
+
+
+def auto_pdfs():
+    """자동 변환으로 만든 PDF 경로 집합 (tools/state/converted.json)."""
+    try:
+        return {ROOT / p for p in json.loads(CONVERTED.read_text(encoding="utf-8"))}
+    except (FileNotFoundError, ValueError):
+        return set()
+
+
 def git_last(files):
     """올라온 파일(README·자동 변환 PDF 제외)을 마지막으로 커밋한 사람과 날짜."""
     if not files:
@@ -188,6 +223,16 @@ def scan():
                 it["issues"].append("내용이 완전히 같은 AASX: " + ", ".join(f"`{n}`" for n in names) + ". 하나만 남기세요")
             if not dup:
                 it["issues"].append(f"AASX가 {len(it['aasx'])}개 — 최신본 하나만 남기거나 장비를 나누세요")
+
+        auto = auto_pdfs()
+        for sec in ("개발계획서", "가이던스"):
+            for e in it["entries"][sec]:
+                # 사람이 함께 올린 PDF가 원본보다 오래되었으면 (원본만 고치고 PDF는 그대로 둔 경우)
+                if e["view"] and e["view"] != e["file"] and e["view"] not in auto \
+                        and git_time(e["file"]) > git_time(e["view"]):
+                    it["issues"].append(f"`{e['view'].name}`이(가) 원본 `{e['file'].name}`보다 오래되었습니다 "
+                                        "— PDF도 다시 저장해 올려 주세요")
+        it["history"] = history(d)
 
         it["no_preview"] = [e["file"] for es in it["entries"].values() for e in es
                             if e["kind"] == "no_preview" and not e["view"]]
