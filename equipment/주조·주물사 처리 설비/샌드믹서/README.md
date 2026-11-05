@@ -28,3 +28,13 @@
 | 5 | ProcessParameters |
 | 6 | PredictiveMaintenance |
 | 7 | TimeSeries |
+
+<details>
+<summary>변경 기록 (최근 2건)</summary>
+
+| 날짜 | 올린 사람 | 내용 |
+|---|---|---|
+| 2026-11-04 | Claude | 자리표시·테스트 파일 삭제, 장비별 하위 폴더 5개 유지 |
+| 2026-11-03 | Claude | AAS 산출물 아카이브 데모: 장비 70종 폴더와 파일 |
+
+</details>

@@ -32,3 +32,15 @@
 | 6 | ProcessParameters |
 | 7 | PredictiveMaintenance |
 | 8 | ProcessVariablesForManufacturingKPICalculation |
+
+<details>
+<summary>변경 기록 (최근 4건)</summary>
+
+| 날짜 | 올린 사람 | 내용 |
+|---|---|---|
+| 2026-11-04 | Claude | 개발계획서 docx 2종 업로드 (자동경면사상가공기, 날염기) |
+| 2026-11-04 | Claude | YouTube 영상 썸네일, 문서 이름 규칙 추가 |
+| 2026-11-04 | Claude | 자리표시·테스트 파일 삭제, 장비별 하위 폴더 5개 유지 |
+| 2026-11-03 | Claude | AAS 산출물 아카이브 데모: 장비 70종 폴더와 파일 |
+
+</details>
