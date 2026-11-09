@@ -36,21 +36,22 @@
 
 썸네일을 누르면 YouTube에서 재생됩니다.
 
-<a href="https://www.youtube.com/watch?v=pzH_Pb4Imlg"><img src="https://img.youtube.com/vi/pzH_Pb4Imlg/hqdefault.jpg" alt="YouTube에서 보기 (2:39)" width="360"></a>
+<a href="https://www.youtube.com/watch?v=pzH_Pb4Imlg"><img src="https://img.youtube.com/vi/pzH_Pb4Imlg/hqdefault.jpg" alt="상압염색기 AAS (2:39)" width="360"></a>
 
-**YouTube에서 보기 (2:39)**
+**상압염색기 AAS (2:39)**
 
 <details>
-<summary>변경 기록 (최근 7건)</summary>
+<summary>변경 기록 (최근 8건)</summary>
 
 | 날짜 | 변경 | 파일 |
 |---|---|---|
+| 2026-11-09 | 추가 | README.md |
+| 2026-11-09 | 삭제 | 상압염색기_그림_항목명_유지_v7.mp4 |
 | 2026-11-04 | 삭제 | 상압염색기_가이던스(자리표시).docx |
 | 2026-11-04 | 삭제 | 상압염색기_개발계획서(자리표시).docx |
 | 2026-11-03 | 추가 | AtmosphericDyeingMachine_v0.0.1_261005.aasx |
 | 2026-11-03 | 추가 | 상압염색기_가이던스(자리표시).docx |
 | 2026-11-03 | 추가 | 상압염색기_개발계획서(자리표시).docx |
 | 2026-11-03 | 추가 | 상압염색기_그림_항목명_유지_v7.mp4 |
-| 2026-11-03 | 추가 | 참고링크.md |
 
 </details>

@@ -53,22 +53,22 @@
 
 썸네일을 누르면 YouTube에서 재생됩니다.
 
-<a href="https://www.youtube.com/watch?v=_2xbALzV0Dg"><img src="https://img.youtube.com/vi/_2xbALzV0Dg/hqdefault.jpg" alt="YouTube에서 보기 (1:38)" width="360"></a>
+<a href="https://www.youtube.com/watch?v=_2xbALzV0Dg"><img src="https://img.youtube.com/vi/_2xbALzV0Dg/hqdefault.jpg" alt="건조기 AAS (1:38)" width="360"></a>
 
-**YouTube에서 보기 (1:38)**
+**건조기 AAS (1:38)**
 
 <details>
 <summary>변경 기록 (최근 8건)</summary>
 
 | 날짜 | 변경 | 파일 |
 |---|---|---|
+| 2026-11-09 | 추가 | README.md |
+| 2026-11-09 | 삭제 | 건조기_학생안내_음성포함_v2.mp4 |
 | 2026-11-04 | 삭제 | 건조기_가이던스(자리표시).docx |
 | 2026-11-04 | 삭제 | 건조기_개발계획서(자리표시).docx |
 | 2026-11-03 | 추가 | Dryer_v0.0.1_260930.aasx |
 | 2026-11-03 | 추가 | SprayDryer_v0.0.1.aasx |
 | 2026-11-03 | 추가 | 건조기_가이던스(자리표시).docx |
 | 2026-11-03 | 추가 | 건조기_개발계획서(자리표시).docx |
-| 2026-11-03 | 추가 | 건조기_학생안내_음성포함_v2.mp4 |
-| 2026-11-03 | 추가 | 참고링크.md |
 
 </details>

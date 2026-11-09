@@ -38,21 +38,22 @@
 
 썸네일을 누르면 YouTube에서 재생됩니다.
 
-<a href="https://www.youtube.com/watch?v=1EOrVTGygnw"><img src="https://img.youtube.com/vi/1EOrVTGygnw/hqdefault.jpg" alt="YouTube에서 보기 (0:23)" width="360"></a>
+<a href="https://www.youtube.com/watch?v=1EOrVTGygnw"><img src="https://img.youtube.com/vi/1EOrVTGygnw/hqdefault.jpg" alt="원심분리기 시뮬레이션 (0:23)" width="360"></a>
 
-**YouTube에서 보기 (0:23)**
+**원심분리기 시뮬레이션 (0:23)**
 
 <details>
-<summary>변경 기록 (최근 7건)</summary>
+<summary>변경 기록 (최근 8건)</summary>
 
 | 날짜 | 변경 | 파일 |
 |---|---|---|
+| 2026-11-09 | 추가 | README.md |
+| 2026-11-09 | 삭제 | 링크.md |
 | 2026-11-04 | 삭제 | 원심분리기_가이던스(자리표시).docx |
 | 2026-11-04 | 삭제 | 원심분리기_개발계획서(자리표시).docx |
 | 2026-11-03 | 추가 | centrifuge_v0.0.2.aasx |
 | 2026-11-03 | 추가 | 원심분리기_가이던스(자리표시).docx |
 | 2026-11-03 | 추가 | 원심분리기_개발계획서(자리표시).docx |
 | 2026-11-03 | 추가 | 링크.md |
-| 2026-11-03 | 추가 | 참고링크.md |
 
 </details>

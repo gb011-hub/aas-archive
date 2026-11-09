@@ -31,10 +31,12 @@
 | 8 | ProcessVariablesForManufacturingKPICalculation |
 
 <details>
-<summary>변경 기록 (최근 6건)</summary>
+<summary>변경 기록 (최근 8건)</summary>
 
 | 날짜 | 변경 | 파일 |
 |---|---|---|
+| 2026-11-09 | 이름 변경 | AAS_활용_가이던스_스트레쳐.docx → 스트레쳐_가이던스.docx |
+| 2026-11-09 | 이름 변경 | 참조모델_개발계획서_스트레쳐.hwp → 스트레쳐_개발계획서.hwp |
 | 2026-11-04 | 이름 변경 | 스트레쳐_가이던스.docx → AAS_활용_가이던스_스트레쳐.docx |
 | 2026-11-04 | 이름 변경 | 스트레쳐_개발계획서.hwp → 참조모델_개발계획서_스트레쳐.hwp |
 | 2026-11-03 | 추가 | Stretcher_v0.0.3.aasx |

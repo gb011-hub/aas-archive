@@ -36,10 +36,11 @@
 | 7 | PredictiveMaintenance |
 
 <details>
-<summary>변경 기록 (최근 5건)</summary>
+<summary>변경 기록 (최근 6건)</summary>
 
 | 날짜 | 변경 | 파일 |
 |---|---|---|
+| 2026-11-09 | 이름 변경 | AAS_활용_가이던스_SMD마운터.pdf → SMD마운터_가이던스.pdf |
 | 2026-11-04 | 이름 변경 | SMD마운터_가이던스.pdf → AAS_활용_가이던스_SMD마운터.pdf |
 | 2026-11-04 | 삭제 | SMD마운터_개발계획서(자리표시).docx |
 | 2026-11-03 | 추가 | SMD_마운터.aasx |
