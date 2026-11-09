@@ -1,6 +1,6 @@
 # 분쇄·파쇄기
 
-[전체 목록](../../../README.md) · 장비군: **분쇄·파쇄 설비**
+[전체 목록](../../../README.md) · 장비군: **분쇄·파쇄 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+%EB%B6%84%EC%87%84%C2%B7%ED%8C%8C%EC%87%84%EA%B8%B0&equipment=%EB%B6%84%EC%87%84%C2%B7%ED%8C%8C%EC%87%84%EA%B8%B0)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 

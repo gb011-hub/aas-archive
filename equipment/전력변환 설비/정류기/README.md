@@ -1,6 +1,6 @@
 # 정류기
 
-[전체 목록](../../../README.md) · 장비군: **전력변환 설비**
+[전체 목록](../../../README.md) · 장비군: **전력변환 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+%EC%A0%95%EB%A5%98%EA%B8%B0&equipment=%EC%A0%95%EB%A5%98%EA%B8%B0)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 

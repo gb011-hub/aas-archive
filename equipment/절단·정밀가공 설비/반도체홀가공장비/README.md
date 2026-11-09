@@ -1,6 +1,6 @@
 # 반도체홀가공장비
 
-[전체 목록](../../../README.md) · 장비군: **절단·정밀가공 설비**
+[전체 목록](../../../README.md) · 장비군: **절단·정밀가공 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+%EB%B0%98%EB%8F%84%EC%B2%B4%ED%99%80%EA%B0%80%EA%B3%B5%EC%9E%A5%EB%B9%84&equipment=%EB%B0%98%EB%8F%84%EC%B2%B4%ED%99%80%EA%B0%80%EA%B3%B5%EC%9E%A5%EB%B9%84)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 

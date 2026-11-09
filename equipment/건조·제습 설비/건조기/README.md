@@ -1,6 +1,6 @@
 # 건조기
 
-[전체 목록](../../../README.md) · 장비군: **건조·제습 설비**
+[전체 목록](../../../README.md) · 장비군: **건조·제습 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+%EA%B1%B4%EC%A1%B0%EA%B8%B0&equipment=%EA%B1%B4%EC%A1%B0%EA%B8%B0)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 
@@ -21,7 +21,6 @@
 | 가이던스 | 아직 없음 | | |
 | AASX | [Dryer_v0.0.1_260930.aasx](AASX/Dryer_v0.0.1_260930.aasx) | 928 KB | [열람 페이지](gen/Dryer_v0.0.1_260930.md) |
 | AASX | [SprayDryer_v0.0.1.aasx](AASX/SprayDryer_v0.0.1.aasx) | 3.0 MB | [열람 페이지](gen/SprayDryer_v0.0.1.md) |
-| 시뮬레이션 | [건조기_학생안내_음성포함_v2.mp4](%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98/%EA%B1%B4%EC%A1%B0%EA%B8%B0_%ED%95%99%EC%83%9D%EC%95%88%EB%82%B4_%EC%9D%8C%EC%84%B1%ED%8F%AC%ED%95%A8_v2.mp4) | 30.6 MB | 다운로드 후 재생 |
 | 참고자료 | [참고링크.md](%EC%B0%B8%EA%B3%A0%EC%9E%90%EB%A3%8C/%EC%B0%B8%EA%B3%A0%EB%A7%81%ED%81%AC.md) | 5 KB | [보기](%EC%B0%B8%EA%B3%A0%EC%9E%90%EB%A3%8C/%EC%B0%B8%EA%B3%A0%EB%A7%81%ED%81%AC.md) |
 
 ## AAS 구성 — `DryerAAS`
@@ -49,6 +48,14 @@
 | 4 | OperationalData |
 | 5 | TimeSeries |
 | 6 | ProcessParameters |
+
+## 시뮬레이션 영상
+
+썸네일을 누르면 YouTube에서 재생됩니다.
+
+<a href="https://www.youtube.com/watch?v=_2xbALzV0Dg"><img src="https://img.youtube.com/vi/_2xbALzV0Dg/hqdefault.jpg" alt="YouTube에서 보기 (1:38)" width="360"></a>
+
+**YouTube에서 보기 (1:38)**
 
 <details>
 <summary>변경 기록 (최근 8건)</summary>

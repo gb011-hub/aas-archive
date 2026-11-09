@@ -1,6 +1,6 @@
 # 수직전기동도금
 
-[전체 목록](../../../README.md) · 장비군: **도금 설비**
+[전체 목록](../../../README.md) · 장비군: **도금 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+%EC%88%98%EC%A7%81%EC%A0%84%EA%B8%B0%EB%8F%99%EB%8F%84%EA%B8%88&equipment=%EC%88%98%EC%A7%81%EC%A0%84%EA%B8%B0%EB%8F%99%EB%8F%84%EA%B8%88)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 

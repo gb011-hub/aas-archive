@@ -1,6 +1,6 @@
 # 고주파열처리 설비
 
-[전체 목록](../../../README.md) · 장비군: **금속열처리 설비**
+[전체 목록](../../../README.md) · 장비군: **금속열처리 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+%EA%B3%A0%EC%A3%BC%ED%8C%8C%EC%97%B4%EC%B2%98%EB%A6%AC+%EC%84%A4%EB%B9%84&equipment=%EA%B3%A0%EC%A3%BC%ED%8C%8C%EC%97%B4%EC%B2%98%EB%A6%AC+%EC%84%A4%EB%B9%84)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 

@@ -13,7 +13,7 @@ import urllib.request
 from urllib.parse import quote
 
 import aasx_view
-from archive_lib import DOC_PREFIX, REQUIRED, ROOT, SECTIONS, YOUTUBE_CHANNEL, scan, size
+from archive_lib import REQUIRED, ROOT, SECTIONS, scan, size
 
 _titles = {}
 
@@ -34,181 +34,60 @@ def rel(path, base):
     return quote(path.relative_to(base).as_posix())
 
 
-def en_name(it):
-    """AASX 파일 이름에서 영문 장비명을 뽑는다 (예: TextilePrintingMachine_v0.0.1 → TextilePrintingMachine)."""
-    if not it["aasx"]:
-        return ""
-    stem = re.split(r"_[vV]\d", it["aasx"][-1]["file"].stem)[0]
-    stem = re.sub(r"_(AAS|ReferenceModel)$", "", stem)
-    return stem if re.fullmatch(r"[A-Za-z0-9_]+", stem) else ""
+REPO = "https://github.com/gb011-hub/aas-archive"
 
 
-def index_doc(it, sec):
-    """표의 문서 칸: 바로 볼 수 있으면 '보기', hwp만 있으면 'PDF 필요', 없으면 빈칸."""
-    es = it["entries"][sec]
-    if not es:
-        return ""
-    e = es[0]
-    if e["view"]:
-        return f"[보기]({rel(e['view'], ROOT)})"
-    if e["kind"] == "convertible":
-        return "변환 중"
-    return "PDF 필요"
+def inquiry_url(name):
+    """장비명이 미리 채워진 문의 양식 (IODA-Lab과 같은 .github/ISSUE_TEMPLATE/equipment-question.yml)."""
+    from urllib.parse import urlencode
+    q = urlencode({"template": "equipment-question.yml", "title": f"[문의] {name}", "equipment": name})
+    return f"{REPO}/issues/new?{q}"
 
 
-def index_aasx(it):
-    a = it["aasx"][-1]
-    v = it.get("views", {}).get(a["file"])
-    return f"[v{a.get('version') or '?'}]({rel(v or a['file'], ROOT)})"
-
-
-def index_sim(it):
-    if it["youtube"]:
-        return f"[영상]({it['youtube'][0][1]})"
-    fs = it["videos"] or it["files"]["시뮬레이션"]
-    return f"[보기]({rel(fs[0], ROOT)})" if fs else ""
-
-
-def _html_links(md):
-    """Markdown 링크를 HTML 링크로 바꾼다 (HTML 표 안에서는 Markdown 링크가 보이지 않음)."""
-    return re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', md)
-
-
-def _html_table(headers, groups):
-    """IODA-Lab/aas-portal-site와 같은 표: 같은 장비군은 첫 칸을 rowspan으로 병합한다."""
-    rows = ["<table>", "<thead><tr>" + "".join(f"<th>{h}</th>" for h in headers) + "</tr></thead>", "<tbody>"]
-    for group, members in groups:
-        for i, cells in enumerate(members):
-            first = f'<td rowspan="{len(members)}">{group}</td>' if i == 0 else ""
-            rows.append("<tr>" + first + "".join(f"<td>{c}</td>" for c in cells) + "</tr>")
-    return "\n".join(rows + ["</tbody>", "</table>"])
-
-
-def _by_group(items):
-    groups = {}
-    for it in items:
-        groups.setdefault(it["group"], []).append(it)
-    return groups.items()
-
-
-def _type_view(items, sec):
-    """유형별 자료 접기 표: 그 자료가 있는 장비만, 파일 이름은 바로 열리는 링크로."""
-    groups = []
-    for group, members in _by_group(items):
-        rows = []
-        for it in members:
-            if sec == "AASX":
-                files = [(a["file"].name, it.get("views", {}).get(a["file"]) or a["file"]) for a in it["aasx"]]
-            elif sec == "시뮬레이션":
-                files = [(f"YouTube 영상 {n}", url) for n, (_, url) in enumerate(it["youtube"], 1)]
-                files += [(e["file"].name, e["view"] or e["file"]) for e in it["entries"][sec]]
-            else:
-                files = [(e["file"].name, e["view"] or e["file"]) for e in it["entries"][sec]]
-            if files:
-                links = "<br>".join(
-                    f'<sub><a href="{t if isinstance(t, str) else rel(t, ROOT)}">{n}</a></sub>' for n, t in files)
-                rows.append([f'<a href="{rel(it["dir"], ROOT)}">{it["name"]}</a>', links])
-        if rows:
-            groups.append((group, rows))
-    count = sum(len(r) for _, r in groups)
-    return f"<details>\n<summary>{sec} ({count}종)</summary>\n\n{_html_table(('장비군', '장비', '자료'), groups)}\n\n</details>"
-
-
-def build_index(items):
+def build_manage(items):
+    """equipment/README.md: 확인 필요 목록과 자료 올리는 법 (첫 화면은 IODA 방식으로 깔끔하게 두고 여기에 모은다)."""
     warn = [i for i in items if i["issues"]]
-    on = [i for i in items if any(i["files"].values())]
-    full = sum(1 for i in items if i["status"] == "완비")
     L = [
-        "# 한양대 AAS Archive",
+        "# 자료 관리",
         "",
-        "중소벤처기업부 「제조데이터 표준화 사업」의 참조모델 개발 과제에서 한양대학교가 만든 산출물을 장비별로 모은 저장소입니다.",
+        "[전체 목록](../README.md)",
         "",
-        "> 이 페이지는 **자동 생성**됩니다. 장비 폴더에 파일을 올리거나 고치거나 지우기만 하면 표와 장비별 페이지가 갱신됩니다. "
-        "회의용 **데모 저장소**이며, 파일은 [IODA-Lab/aas-portal-site](https://github.com/IODA-Lab/aas-portal-site)의 실제 파일입니다.",
+        "> 자동 생성 페이지입니다. 장비 폴더에 파일을 올리거나 고치거나 지우면 PDF 변환 · AASX 열람 페이지 · "
+        "장비별 페이지 · 이 목록이 자동으로 갱신됩니다.",
         "",
-        "## 과제 소개",
-        "",
-        "이 사업은 중소 제조기업의 공장·기업 간 디지털 연결을 촉진하기 위해, 국제표준 AAS(Asset Administration Shell, IEC 63278)를 "
-        "바탕으로 핵심 장비의 데이터 표준 참조모델과 가이던스를 개발해 제조 현장에 보급합니다. "
-        "AAS는 장비 같은 제조자산의 정보를 디지털로 표현하고 관리하기 위한 표준 모델입니다.",
-        "",
-        "| 항목 | 내용 |",
-        "|---|---|",
-        "| 사업명 | 2026년 제조데이터 표준화 사업 |",
-        "| 사업기간 | 2026년 5월 18일 ~ 2027년 2월 28일 |",
-        "| 수행 체계 | 주식회사 엣지크로스(주관), 한양대학교, 주식회사 엑센솔루션 |",
-        "| 개발 목표 | 장비 70종의 참조모델과 가이던스 |",
-        "",
-        "## 산출물",
-        "",
-        "| 산출물 | 내용 |",
-        "|---|---|",
-        "| 개발계획서 | 장비별 참조모델의 개발 범위와 구성을 정리한 문서 |",
-        "| 가이던스 | 기업이 참조모델을 활용할 수 있도록 설명한 문서 |",
-        "| AASX | AAS 파일 형식으로 만든 장비별 참조모델 |",
-        f"| 시뮬레이션 | 참조모델의 활용을 보여 주는 시뮬레이션 코드, 실행 안내, [영상 (YouTube)]({YOUTUBE_CHANNEL}) |",
-        "| 참고자료 | 작성에 참고한 카탈로그, 표준, 기술 문서 링크 |",
-        "",
-        "## 장비별 자료",
-        "",
-        f"{len(items)}종 중 {len(on)}종 등록 · 필수 문서(개발계획서 · 가이던스 · AASX) 완비 {full}종 · 확인 필요 {len(warn)}종. "
-        "장비 이름을 누르면 장비 폴더가, 표의 링크를 누르면 자료가 바로 열립니다.",
+        f"## 확인 필요 ({len(warn)}종)",
         "",
     ]
-    groups = []
-    for group, members in _by_group(items):
-        rows = []
-        for it in members:
-            name = f'<a href="{rel(it["dir"], ROOT)}">{it["name"]}</a>'
-            if it["issues"]:
-                name += "<br><sub>확인 필요</sub>"
-            rows.append([name,
-                         _html_links(index_doc(it, "개발계획서")),
-                         _html_links(index_doc(it, "가이던스")),
-                         _html_links(index_aasx(it)) if it["aasx"] else "",
-                         _html_links(index_sim(it))])
-        groups.append((group, rows))
-    L += [_html_table(("장비군", "장비", "개발계획서", "가이던스", "AASX", "시뮬레이션"), groups), ""]
-    L += ["## 유형별 자료", ""]
-    L += ["\n\n".join(_type_view(items, sec) for sec in SECTIONS), ""]
-    L += ["## 관리", ""]
-    L += [f"<details><summary>확인 필요 {len(warn)}종</summary>", "", "| 장비 | 고칠 내용 |", "|---|---|"]
-    for it in warn:
-        short = [re.sub(r" \(예: [^)]*\)", "", m).replace("|", "/") for m in it["issues"]]
-        L.append(f"| [{it['name']}]({rel(it['dir'], ROOT)}) | " + "<br>".join(short) + " |")
-    L += ["", "AASX 이름 규칙: `영문장비명_v0.0.1.aasx` (v는 소문자, `_AAS_` 같은 덧붙임 없이)", "", "</details>", ""]
-
+    if warn:
+        L += ["| 장비 | 고칠 내용 |", "|---|---|"]
+        for it in warn:
+            short = [m.replace("|", "/") for m in it["issues"]]
+            L.append(f"| [{it['name']}]({rel(it['dir'], ROOT / 'equipment')}) | " + "<br>".join(short) + " |")
+    else:
+        L.append("없음")
     L += [
-        "<details><summary>자료 올리는 법</summary>",
         "",
-        "1. `equipment/<장비군>/<장비>/` 아래 알맞은 폴더에 원본을 올립니다: "
+        "## 자료 올리는 법",
+        "",
+        "1. 장비 폴더 `equipment/<장비군>/<장비>/` 아래 알맞은 폴더에 원본을 올립니다: "
         "`개발계획서/` · `가이던스/` · `AASX/` · `시뮬레이션/` · `참고자료/`",
-        "2. push하면 GitHub Actions가 docx · pptx · xlsx를 PDF로 바꾸고, AASX 열람 페이지와 이 표 · 장비별 페이지를 다시 만듭니다.",
+        "2. GitHub Actions가 PDF 변환 · AASX 열람 페이지 · 장비별 페이지 · 첫 화면을 자동으로 다시 만듭니다 (1 ~ 3분).",
         "",
-        "**파일 이름 규칙**",
+        "### 파일 이름 규칙 (IODA-Lab/aas-portal-site와 같음)",
         "",
         "| 폴더 | 이름 | 예 (장비: PET 사출성형기) |",
         "|---|---|---|",
-        f"| `가이던스/` | `{DOC_PREFIX['가이던스']}<장비명>` | `{DOC_PREFIX['가이던스']}PET사출성형기.docx` |",
-        f"| `개발계획서/` | `{DOC_PREFIX['개발계획서']}<장비명>` | `{DOC_PREFIX['개발계획서']}PET사출성형기.hwp` |",
+        "| `개발계획서/` | `<장비명>_개발계획서` | `PET사출성형기_개발계획서.hwp` |",
+        "| `가이던스/` | `<장비명>_가이던스` | `PET사출성형기_가이던스.docx` |",
         "| `AASX/` | `<영문장비명>_v<버전>.aasx` | `PETInjectionMoldingMachine_v0.0.1.aasx` |",
         "",
-        "- 한글 hwp는 자동으로 PDF가 만들어집니다 (서식은 원본과 조금 다를 수 있음). 원본 그대로 보여야 하면 PDF를 같은 이름으로 함께 올리면 그 PDF가 우선입니다. hwpx는 자동 변환이 안 되므로 PDF를 함께 올립니다.",
-        f"- 시뮬레이션 영상은 [YouTube 채널]({YOUTUBE_CHANNEL})에 올리고, 주소를 `시뮬레이션/링크.md`에 적습니다. "
-        "표에 '영상'으로 표시되고 누르면 바로 재생됩니다. mp4를 직접 올리면 내려받아야 재생됩니다 (파일당 100MB 제한).",
-        "",
-        "**자동으로 채워지는 값**",
-        "",
-        "| 값 | 어디서 가져오나 |",
-        "|---|---|",
-        "| 장비군 · 장비명 | 폴더 이름 |",
-        "| 영문명 · AASX 버전 | AASX 파일 이름 (`영문장비명_v0.0.1`) |",
-        "| 보기 링크 | 바로 열리는 PDF · AASX 열람 페이지 · YouTube 주소 |",
-        "| 바로 보기용 PDF | docx · pptx · xlsx (LibreOffice), hwp (pyhwp + Chrome) 자동 변환 |",
-        "| AASX 열람 페이지 | AASX를 열어 서브모델 · 요소 · 값 · semanticId를 표로 펼침 (장비 폴더의 `gen/`) |",
-        "| 확인 필요 | 파일 이름 규칙, AASX 개수, 내용이 똑같은 중복 파일 |",
-        "",
-        "</details>",
+        "- 장비명은 폴더 이름에서 띄어쓰기 · 가운뎃점 · 괄호 부분을 뺀 것입니다. 예: `디스크 탈수기(DISCFILTER)` → `디스크탈수기`",
+        "- hwp · docx는 자동으로 PDF가 만들어집니다. hwpx는 PDF를 같은 이름으로 함께 올립니다.",
+        "- 시뮬레이션 영상은 YouTube에 올리고 `tools/archive-index/videos.csv`에 장비 · 주소 · 길이를 한 줄 적습니다 "
+        "(zip · mp4는 올리지 않습니다).",
+        "- 장비 담당자는 `tools/archive-index/authors.csv`, 담당자 GitHub 계정은 `owner_accounts.csv`에 적습니다. "
+        "첫 화면의 담당자 이름을 누르면 문의 양식이 열리고, 등록된 문의는 담당자에게 자동으로 지정됩니다.",
+        "- 웹 업로드는 파일당 25MB까지입니다. 더 큰 파일은 GitHub Desktop으로 올립니다 (100MB까지).",
         "",
     ]
     return "\n".join(L)
@@ -238,7 +117,7 @@ def build_equipment(it):
     L = [
         f"# {it['name']}",
         "",
-        f"[전체 목록]({'../' * 3}README.md) · 장비군: **{it['group']}**",
+        f"[전체 목록]({'../' * 3}README.md) · 장비군: **{it['group']}** · [이 장비 문의하기]({inquiry_url(it['name'])})",
         "",
         "> 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.",
         "",
@@ -282,6 +161,8 @@ def build_equipment(it):
         L += ["## 시뮬레이션 영상", "", "썸네일을 누르면 YouTube에서 재생됩니다.", ""]
         for vid, url in it["youtube"]:
             title = youtube_title(url) or "YouTube에서 보기"
+            length = it.get("youtube_len", {}).get(url)
+            title += f" ({length})" if length else ""
             L += [f'<a href="{url}"><img src="https://img.youtube.com/vi/{vid}/hqdefault.jpg" '
                   f'alt="{title}" width="360"></a>', "", f"**{title}**", ""]
     if it["uml"]:
@@ -346,10 +227,11 @@ def main():
         sys.exit(1 if n else 0)
     for it in items:
         build_views(it)
-    (ROOT / "README.md").write_text(build_index(items), encoding="utf-8")
+    # 첫 화면(README.md)은 tools/archive-index/build_index.py(IODA-Lab 방식)가 만든다
+    (ROOT / "equipment" / "README.md").write_text(build_manage(items), encoding="utf-8")
     for it in items:
         (it["dir"] / "README.md").write_text(build_equipment(it), encoding="utf-8")
-    print(f"README 생성: 전체 1개 + 장비 {len(items)}개, AASX 열람 페이지 {sum(len(i['views']) for i in items)}개")
+    print(f"README 생성: 자료 관리 1개 + 장비 {len(items)}개, AASX 열람 페이지 {sum(len(i['views']) for i in items)}개")
 
 
 if __name__ == "__main__":

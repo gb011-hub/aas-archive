@@ -1,6 +1,6 @@
 # 컨베이어
 
-[전체 목록](../../../README.md) · 장비군: **이송·컨베이어 설비**
+[전체 목록](../../../README.md) · 장비군: **이송·컨베이어 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+%EC%BB%A8%EB%B2%A0%EC%9D%B4%EC%96%B4&equipment=%EC%BB%A8%EB%B2%A0%EC%9D%B4%EC%96%B4)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 

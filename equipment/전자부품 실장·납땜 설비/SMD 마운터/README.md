@@ -1,6 +1,6 @@
 # SMD 마운터
 
-[전체 목록](../../../README.md) · 장비군: **전자부품 실장·납땜 설비**
+[전체 목록](../../../README.md) · 장비군: **전자부품 실장·납땜 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+SMD+%EB%A7%88%EC%9A%B4%ED%84%B0&equipment=SMD+%EB%A7%88%EC%9A%B4%ED%84%B0)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 
@@ -18,7 +18,7 @@
 | 구분 | 파일 | 크기 | 보기 |
 |---|---|---|---|
 | 개발계획서 | 아직 없음 | | |
-| 가이던스 | [AAS_활용_가이던스_SMD마운터.pdf](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/AAS_%ED%99%9C%EC%9A%A9_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4_SMD%EB%A7%88%EC%9A%B4%ED%84%B0.pdf) | 6.5 MB | [보기](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/AAS_%ED%99%9C%EC%9A%A9_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4_SMD%EB%A7%88%EC%9A%B4%ED%84%B0.pdf) |
+| 가이던스 | [SMD마운터_가이던스.pdf](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/SMD%EB%A7%88%EC%9A%B4%ED%84%B0_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4.pdf) | 6.5 MB | [보기](%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4/SMD%EB%A7%88%EC%9A%B4%ED%84%B0_%EA%B0%80%EC%9D%B4%EB%8D%98%EC%8A%A4.pdf) |
 | AASX | [SMD_마운터.aasx](AASX/SMD_%EB%A7%88%EC%9A%B4%ED%84%B0.aasx) | 360 KB | [열람 페이지](gen/SMD_%EB%A7%88%EC%9A%B4%ED%84%B0.md) |
 
 ## AAS 구성 — `SMDMounter`

@@ -1,6 +1,6 @@
 # 원심분리기
 
-[전체 목록](../../../README.md) · 장비군: **분리·여과 설비**
+[전체 목록](../../../README.md) · 장비군: **분리·여과 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+%EC%9B%90%EC%8B%AC%EB%B6%84%EB%A6%AC%EA%B8%B0&equipment=%EC%9B%90%EC%8B%AC%EB%B6%84%EB%A6%AC%EA%B8%B0)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 
@@ -18,7 +18,6 @@
 | 개발계획서 | 아직 없음 | | |
 | 가이던스 | 아직 없음 | | |
 | AASX | [centrifuge_v0.0.2.aasx](AASX/centrifuge_v0.0.2.aasx) | 1.7 MB | [열람 페이지](gen/centrifuge_v0.0.2.md) |
-| 시뮬레이션 | [링크.md](%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98/%EB%A7%81%ED%81%AC.md) | 188 B | [보기](%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98/%EB%A7%81%ED%81%AC.md) |
 | 참고자료 | [참고링크.md](%EC%B0%B8%EA%B3%A0%EC%9E%90%EB%A3%8C/%EC%B0%B8%EA%B3%A0%EB%A7%81%ED%81%AC.md) | 1 KB | [보기](%EC%B0%B8%EA%B3%A0%EC%9E%90%EB%A3%8C/%EC%B0%B8%EA%B3%A0%EB%A7%81%ED%81%AC.md) |
 
 ## AAS 구성 — `CentrifugeAAS`
@@ -34,6 +33,14 @@
 | 5 | Reliability |
 | 6 | PredictiveMaintenance |
 | 7 | TimeSeries |
+
+## 시뮬레이션 영상
+
+썸네일을 누르면 YouTube에서 재생됩니다.
+
+<a href="https://www.youtube.com/watch?v=1EOrVTGygnw"><img src="https://img.youtube.com/vi/1EOrVTGygnw/hqdefault.jpg" alt="YouTube에서 보기 (0:23)" width="360"></a>
+
+**YouTube에서 보기 (0:23)**
 
 <details>
 <summary>변경 기록 (최근 7건)</summary>

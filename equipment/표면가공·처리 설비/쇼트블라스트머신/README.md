@@ -1,6 +1,6 @@
 # 쇼트블라스트머신
 
-[전체 목록](../../../README.md) · 장비군: **표면가공·처리 설비**
+[전체 목록](../../../README.md) · 장비군: **표면가공·처리 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+%EC%87%BC%ED%8A%B8%EB%B8%94%EB%9D%BC%EC%8A%A4%ED%8A%B8%EB%A8%B8%EC%8B%A0&equipment=%EC%87%BC%ED%8A%B8%EB%B8%94%EB%9D%BC%EC%8A%A4%ED%8A%B8%EB%A8%B8%EC%8B%A0)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 

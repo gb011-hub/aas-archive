@@ -1,12 +1,17 @@
 # 주조 장비
 
-[전체 목록](../../../README.md) · 장비군: **주조·주물사 처리 설비**
+[전체 목록](../../../README.md) · 장비군: **주조·주물사 처리 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+%EC%A3%BC%EC%A1%B0+%EC%9E%A5%EB%B9%84&equipment=%EC%A3%BC%EC%A1%B0+%EC%9E%A5%EB%B9%84)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 
 <img src="gen/DieCastingMachine_v0.0.1_260930_thumbnail.jpg" alt="주조 장비" height="160" align="right">
 
 필수 산출물 1/3 · 개발계획서 없음 · 가이던스 없음 · AASX 있음
+
+> [!WARNING]
+> **확인 필요**
+>
+> - zip · 영상 파일: `주조_대시보드_3D_녹화.mp4` — 영상은 YouTube에 올리고 videos.csv에 주소를 적어 주세요
 
 ## 산출물
 

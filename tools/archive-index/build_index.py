@@ -1,0 +1,203 @@
+#!/usr/bin/env python3
+"""저장소 파일 목록으로 최상위 README.md의 표를 다시 만든다.
+
+IODA-Lab/aas-portal-site의 tools/archive-index/build_index.py를 그대로 가져와 첫 화면 형식을 맞췄다.
+바꾼 점: 저장소 주소(문의 양식 링크), 도구 링크(이 저장소에는 도구 폴더가 없어 IODA-Lab의 도구로 연결).
+장비 폴더 안 페이지 · PDF 변환 · AASX 열람 페이지는 tools/build_readme.py · tools/convert_docs.py가 만든다.
+
+사용법: python tools/archive-index/build_index.py [--check]
+--check 는 README를 고치지 않고 폴더 구조와 파일명 규칙 위반만 출력한다.
+"""
+import csv
+import re
+import subprocess
+import sys
+from collections import defaultdict
+from html import escape
+from itertools import groupby
+from pathlib import Path
+from urllib.parse import quote, urlencode
+
+REPO = "https://github.com/gb011-hub/aas-archive"
+TOOLS_REPO = "https://github.com/IODA-Lab/aas-portal-site/tree/main/tools"
+SECTIONS = ("개발계획서", "가이던스", "AASX", "시뮬레이션", "참고자료")
+AASX_NAME = re.compile(r"^[A-Z][A-Za-z0-9]*_v\d+\.\d+\.\d+(_\d{6}|_\d{8})?\.aasx$")
+
+README = """# 한양대 AAS Archive
+
+중소벤처기업부 「제조데이터 표준화 사업」의 참조모델 개발 과제에서 한양대학교가 만든 산출물을 장비별로 모은 저장소입니다.
+
+## 과제 소개
+
+이 사업은 중소 제조기업의 공장·기업 간 디지털 연결을 촉진하기 위해, 국제표준 AAS(Asset Administration Shell, IEC 63278)를 바탕으로 핵심 장비의 데이터 표준 참조모델과 가이던스를 개발해 제조 현장에 보급합니다. AAS는 장비 같은 제조자산의 정보를 디지털로 표현하고 관리하기 위한 표준 모델입니다.
+
+| 항목 | 내용 |
+|---|---|
+| 사업명 | 2026년 제조데이터 표준화 사업 |
+| 사업기간 | 2026년 5월 18일 ~ 2027년 2월 28일 |
+| 수행 체계 | 주식회사 엣지크로스(주관), 한양대학교, 주식회사 엑센솔루션 |
+| 개발 목표 | 장비 70종의 참조모델과 가이던스 |
+
+## 산출물
+
+| 산출물 | 내용 |
+|---|---|
+| 개발계획서 | 장비별 참조모델의 개발 범위와 구성을 정리한 문서 |
+| 가이던스 | 기업이 참조모델을 활용할 수 있도록 설명한 문서 |
+| AASX | AAS 파일 형식으로 만든 장비별 참조모델 |
+| 시뮬레이션 | 참조모델의 활용을 보여 주는 시뮬레이션 영상 |
+| 참고자료 | 작성에 참고한 카탈로그, 표준, 기술 문서 링크 |
+
+## 시뮬레이션 영상
+
+이미지를 누르면 YouTube에서 재생됩니다.
+
+{gallery}
+
+## 장비별 자료
+
+장비에 대한 질문은 표의 담당자 이름을 눌러 남겨 주세요. GitHub 계정이 필요하며, 글은 누구나 볼 수 있습니다.
+
+{table}
+
+## 유형별 자료
+
+{views}
+
+## 도구
+
+{tools}
+"""
+
+TOOLS = {
+    "semantic-id-search": "ECLASS Semantic ID 검색 도구",
+    "plan2aasx": "개발계획서→AASX 변환 도구",
+}
+
+
+def equipment_stem(folder):
+    """폴더 이름을 파일 이름용 장비명으로 바꾼다. 예: '디스크 탈수기(DISCFILTER)' -> '디스크탈수기'"""
+    return re.sub(r"\([^)]*\)|[\s·･]", "", folder)
+
+
+def link(label, path):
+    return f'<a href="{quote(path, safe="/")}">{escape(label)}</a>'
+
+
+def inquiry_link(name, label):
+    """장비명이 미리 채워진 문의 양식 링크를 만든다."""
+    query = urlencode({"template": "equipment-question.yml", "title": f"[문의] {name}", "equipment": name})
+    return f'<a href="{escape(f"{REPO}/issues/new?{query}")}">{escape(label)}</a>'
+
+
+def load_equipment(paths):
+    equipment = defaultdict(lambda: defaultdict(list))
+    for p in paths:
+        parts = p.split("/")
+        if parts[0] == "equipment" and len(parts) >= 5 and parts[3] in SECTIONS:
+            equipment[(parts[1], parts[2])][parts[3]].append(p)
+    return equipment
+
+
+def real_files(files):
+    return [f for f in files if not f.endswith(".gitkeep")]
+
+
+def html_table(headers, groups):
+    """groups는 (장비군, [행의 칸 목록]) 목록이다. 같은 장비군은 첫 칸을 rowspan으로 병합한다."""
+    rows = ["<table>", "<thead><tr>" + "".join(f"<th>{h}</th>" for h in headers) + "</tr></thead>", "<tbody>"]
+    for group, members in groups:
+        for i, cells in enumerate(members):
+            first = f'<td rowspan="{len(members)}">{escape(group)}</td>' if i == 0 else ""
+            rows.append("<tr>" + first + "".join(f"<td>{c}</td>" for c in cells) + "</tr>")
+    return "\n".join(rows + ["</tbody>", "</table>"])
+
+
+def render_view(equipment, section):
+    """한 자료 유형의 접기 표를 만든다. 해당 자료가 있는 장비만 넣는다."""
+    groups = []
+    for group, members in groupby(sorted(equipment.items()), key=lambda kv: kv[0][0]):
+        rows = []
+        for (_, name), sections in members:
+            files = [f for f in real_files(sections[section]) if section != "AASX" or f.endswith(".aasx")]
+            if files:
+                # 파일 이름이 길어 줄이 바뀌지 않도록 작은 글자로 쓴다.
+                links = "<br>".join(f"<sub>{link(Path(f).name, f)}</sub>" for f in sorted(files))
+                rows.append([link(name, f"equipment/{group}/{name}"), links])
+        if rows:
+            groups.append((group, rows))
+    count = sum(len(rows) for _, rows in groups)
+    table = html_table(("장비군", "장비", "자료"), groups)
+    return f"<details>\n<summary>{section} ({count}종)</summary>\n\n{table}\n\n</details>"
+
+
+def render_gallery():
+    """videos.csv의 영상을 YouTube 썸네일 격자로 만든다."""
+    with open(Path(__file__).with_name("videos.csv"), encoding="utf-8-sig", newline="") as f:
+        videos = list(csv.DictReader(f))
+    cells = []
+    for v in videos:
+        video = re.search(r"(?:v=|youtu\.be/|/shorts/|/embed/)([\w-]{11})", v["YouTube 주소"]).group(1)
+        name = escape(v["장비"])
+        caption = f"{name} ({escape(v['길이'])})" if v["길이"] else name
+        cells.append(
+            f'<td align="center" width="33%"><a href="https://www.youtube.com/watch?v={video}">'
+            f'<img src="https://img.youtube.com/vi/{video}/mqdefault.jpg" width="260" alt="{name} 시뮬레이션 영상"></a>'
+            f"<br>{caption}</td>"
+        )
+    rows = ["".join(cells[i:i + 3]) for i in range(0, len(cells), 3)]
+    return "<table>\n" + "\n".join(f"<tr>{r}</tr>" for r in rows) + "\n</table>"
+
+
+def render(paths, authors):
+    equipment = load_equipment(paths)
+    # Markdown 표는 셀 병합이 안 되어 HTML 표를 쓴다.
+    groups = [
+        (group, [[link(name, f"equipment/{group}/{name}"), inquiry_link(name, authors[name]) if authors.get(name) else "-"] for (_, name), _s in members])
+        for group, members in groupby(sorted(equipment.items()), key=lambda kv: kv[0][0])
+    ]
+    views = "\n\n".join(render_view(equipment, s) for s in SECTIONS if s != "시뮬레이션")
+    tools = ["| 도구 | 설명 |", "|---|---|"] + [
+        f'| <a href="{TOOLS_REPO}/{n}">{escape(n)}</a> | {d} |' for n, d in sorted(TOOLS.items())]
+    return README.format(gallery=render_gallery(), table=html_table(("장비군", "장비", "담당자"), groups), views=views, tools="\n".join(tools))
+
+
+def check(paths):
+    problems = []
+    tops = {p.split("/")[0] for p in paths}
+    problems += [f"최상위에 허용되지 않은 항목: {t}" for t in sorted(tops - {"README.md", "equipment", "tools", ".github", ".gitattributes", ".gitignore"})]
+    for (group, name), sections in sorted(load_equipment(paths).items()):
+        stem = equipment_stem(name)
+        for s in SECTIONS:
+            if not sections[s]:
+                problems.append(f"{name}: {s} 폴더 없음")
+        for section, word in (("개발계획서", "개발계획서"), ("가이던스", "가이던스")):
+            for f in real_files(sections[section]):
+                if Path(f).stem != f"{stem}_{word}":
+                    problems.append(f"{name}: 파일명 규칙과 다름: {Path(f).name}")
+        for f in real_files(sections["AASX"]):
+            if f.endswith(".aasx") and not AASX_NAME.match(Path(f).name):
+                problems.append(f"{name}: AASX 파일명 형식 확인: {Path(f).name}")
+        for f in real_files(sum(sections.values(), [])):
+            if f.lower().endswith((".zip", ".mp4")):
+                problems.append(f"{name}: zip·영상 파일: {Path(f).name}")
+    return problems
+
+
+def main():
+    root = Path(__file__).resolve().parents[2]
+    out = subprocess.run(["git", "-C", str(root), "ls-files", "-z"], capture_output=True, check=True).stdout
+    paths = out.decode("utf-8").split("\0")[:-1]
+    if "--check" in sys.argv:
+        problems = check(paths)
+        sys.stdout.reconfigure(encoding="utf-8")
+        print("\n".join(problems) or "문제 없음")
+        return 1 if problems else 0
+    with open(Path(__file__).with_name("authors.csv"), encoding="utf-8-sig", newline="") as f:
+        authors = {r["장비"]: r["담당자"] for r in csv.DictReader(f)}
+    (root / "README.md").write_text(render(paths, authors), encoding="utf-8", newline="\n")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,6 +1,6 @@
 # 리플로우 납땜 기계
 
-[전체 목록](../../../README.md) · 장비군: **전자부품 실장·납땜 설비**
+[전체 목록](../../../README.md) · 장비군: **전자부품 실장·납땜 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+%EB%A6%AC%ED%94%8C%EB%A1%9C%EC%9A%B0+%EB%82%A9%EB%95%9C+%EA%B8%B0%EA%B3%84&equipment=%EB%A6%AC%ED%94%8C%EB%A1%9C%EC%9A%B0+%EB%82%A9%EB%95%9C+%EA%B8%B0%EA%B3%84)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 

@@ -26,41 +26,39 @@ VIEWABLE = {".pdf", ".md", ".txt", ".png", ".jpg", ".jpeg", ".gif", ".svg"}  # G
 CONVERTIBLE = {".docx", ".doc", ".pptx", ".xlsx", ".hwp"}           # PDF 자동 변환 (tools/convert_docs.py)
 NO_PREVIEW_DOC = {".hwpx"}                                           # 자동 변환 불가 → PDF를 함께 올려야 함
 VIDEO = {".mp4", ".webm", ".mov"}
-LINK_TEXT = {".md", ".txt"}                                           # YouTube 주소를 적는 파일
 
 YOUTUBE_CHANNEL = "https://www.youtube.com/@%ED%95%9C%EC%96%91%EB%8C%80%ED%95%99%EA%B5%90%EC%A0%9C%EC%A1%B0%EB%8D%B0%EC%9D%B4%ED%84%B0"
 YOUTUBE_ID = re.compile(
     r"(?:youtube\.com/(?:watch\?(?:[^\s)\]]*&)?v=|shorts/|live/|embed/)|youtu\.be/)([A-Za-z0-9_-]{11})")
 
-# 문서 이름 규칙: <접두어>_<장비명>.<확장자>  (장비명은 폴더 이름, 띄어쓰기는 빼거나 _로 써도 됨)
-DOC_PREFIX = {"가이던스": "AAS_활용_가이던스_", "개발계획서": "참조모델_개발계획서_"}
+# 문서 이름 규칙 (IODA-Lab/aas-portal-site와 같음): <장비명>_개발계획서, <장비명>_가이던스
+# 장비명은 폴더 이름에서 띄어쓰기 · 가운뎃점 · 괄호 부분을 뺀 것. 예: '디스크 탈수기(DISCFILTER)' → '디스크탈수기'
+DOC_WORD = {"개발계획서": "개발계획서", "가이던스": "가이던스"}
+VIDEOS_CSV = ROOT / "tools" / "archive-index" / "videos.csv"   # 장비 · YouTube 주소 · 길이 (IODA-Lab과 같은 파일)
 
 
-def _norm(s):
-    return re.sub(r"[\s_]+", "", s).lower()
+def equipment_stem(folder):
+    return re.sub(r"\([^)]*\)|[\s·･]", "", folder)
 
 
 def doc_name_ok(section, stem, equipment):
-    """문서 파일 이름이 '<접두어>_<장비명>' 규칙을 따르는지. 장비명 뒤에 _v1 같은 덧붙임은 허용."""
-    prefix = DOC_PREFIX[section]
-    if not stem.startswith(prefix):
-        return False
-    return _norm(stem[len(prefix):]).startswith(_norm(equipment))
+    return stem == f"{equipment_stem(equipment)}_{DOC_WORD[section]}"
 
 
-def youtube_links(files):
-    """시뮬레이션 폴더의 md/txt 파일에서 YouTube 영상 주소를 찾아 [(영상 ID, 원래 주소)]로 돌려준다."""
-    found, seen = [], set()
-    for f in files:
-        if f.suffix.lower() not in LINK_TEXT:
-            continue
-        text = f.read_text(encoding="utf-8", errors="replace")
-        for m in YOUTUBE_ID.finditer(text):
-            vid = m.group(1)
-            if vid not in seen:
-                seen.add(vid)
-                found.append((vid, f"https://www.youtube.com/watch?v={vid}"))
-    return found
+def load_videos():
+    """videos.csv를 {장비: [(영상 ID, 주소, 길이)]}로 읽는다."""
+    import csv
+    videos = {}
+    try:
+        with open(VIDEOS_CSV, encoding="utf-8-sig", newline="") as f:
+            for r in csv.DictReader(f):
+                m = YOUTUBE_ID.search(r.get("YouTube 주소", ""))
+                if m:
+                    videos.setdefault(r["장비"].strip(), []).append(
+                        (m.group(1), f"https://www.youtube.com/watch?v={m.group(1)}", r.get("길이", "")))
+    except FileNotFoundError:
+        pass
+    return videos
 
 
 BOT = "github-actions[bot]"
@@ -215,6 +213,7 @@ def kind_of(f):
 
 def scan():
     items = []
+    videos = load_videos()
     for d in sorted(p for p in EQUIP.glob("*/*") if p.is_dir()):
         it = {"group": d.parent.name, "name": d.name, "dir": d, "files": {}, "entries": {}, "issues": []}
         for sec in SECTIONS:
@@ -267,13 +266,17 @@ def scan():
         it["no_preview"] = [e["file"] for es in it["entries"].values() for e in es
                             if e["kind"] == "no_preview" and not e["view"]]
         it["videos"] = [e["file"] for e in it["entries"]["시뮬레이션"] if e["kind"] == "video"]
-        it["youtube"] = youtube_links(it["files"]["시뮬레이션"])
+        it["youtube"] = [(v, u) for v, u, _ in videos.get(it["name"], [])]
+        it["youtube_len"] = {u: n for _, u, n in videos.get(it["name"], [])}
 
-        for sec, prefix in DOC_PREFIX.items():
+        for sec in DOC_WORD:
             for e in it["entries"][sec]:
                 if not doc_name_ok(sec, e["file"].stem, it["name"]):
-                    example = f"{prefix}{it['name'].replace(' ', '')}{e['file'].suffix}"
+                    example = f"{equipment_stem(it['name'])}_{DOC_WORD[sec]}{e['file'].suffix}"
                     it["issues"].append(f"{sec} 파일 이름 규칙 위반: `{e['file'].name}` (예: `{example}`)")
+        for f in it["files"]["시뮬레이션"] + [x for s_ in SECTIONS if s_ != "시뮬레이션" for x in it["files"][s_]]:
+            if f.suffix.lower() in (".zip", ".mp4"):
+                it["issues"].append(f"zip · 영상 파일: `{f.name}` — 영상은 YouTube에 올리고 videos.csv에 주소를 적어 주세요")
         items.append(it)
     return items
 

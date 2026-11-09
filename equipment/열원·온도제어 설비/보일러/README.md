@@ -1,6 +1,6 @@
 # 보일러
 
-[전체 목록](../../../README.md) · 장비군: **열원·온도제어 설비**
+[전체 목록](../../../README.md) · 장비군: **열원·온도제어 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+%EB%B3%B4%EC%9D%BC%EB%9F%AC&equipment=%EB%B3%B4%EC%9D%BC%EB%9F%AC)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 

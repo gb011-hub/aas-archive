@@ -1,6 +1,6 @@
 # 레이저측정기
 
-[전체 목록](../../../README.md) · 장비군: **계측·분석 설비**
+[전체 목록](../../../README.md) · 장비군: **계측·분석 설비** · [이 장비 문의하기](https://github.com/gb011-hub/aas-archive/issues/new?template=equipment-question.yml&title=%5B%EB%AC%B8%EC%9D%98%5D+%EB%A0%88%EC%9D%B4%EC%A0%80%EC%B8%A1%EC%A0%95%EA%B8%B0&equipment=%EB%A0%88%EC%9D%B4%EC%A0%80%EC%B8%A1%EC%A0%95%EA%B8%B0)
 
 > 자동 생성 페이지입니다. 이 폴더에 파일을 올리면 내용이 갱신됩니다.
 
